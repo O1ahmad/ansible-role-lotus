@@ -1,0 +1,6 @@
+---
+- name: Install Kibana rpm
+  yum:
+    name: "{{ package_tmp.dest }}"
+    state: present
+  when: install_type == "package"

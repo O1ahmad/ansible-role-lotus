@@ -1,0 +1,33 @@
+---
+- debug:
+    var: ansible_env
+
+- name: Set unit [Service] configuration
+  set_fact:
+    default_service_unit:
+      ExecStart: "/usr/local/bin/lotus daemon {{ extra_run_args|join(' ') }}"
+      User: "{{ ansible_env.SUDO_USER }}"
+      Group: "{{ ansible_env.SUDO_USER }}"
+      StandardOutput: journal
+      StandardError: inherit
+
+- name: Setup Lotus systemd unit
+  include_role:
+    name: 0x0i.systemd
+  vars:
+    unit_config:
+      - name: lotus
+        Unit:
+          Description: Lotus
+          Documentation: https://docs.lotu.sh/
+          Wants: network-online.target
+          After: network-online.target
+        Service: "{{ default_service_unit | combine(custom_unit_properties) }}"
+        Install:
+          WantedBy: multi-user.target
+
+- name: Ensure start of lotus daemon service
+  service:
+    name: lotus
+    state: started
+    enabled: "yes"

@@ -1,0 +1,14 @@
+# Managed by Ansible (0xOI/ansible-role-lotus)
+# seei --- for more details
+
+{% for section in config %}
+[{{ section.key }}]
+{% for key, value in section %}
+{% if value is string %}
+{{ key }} = "{{ value }}"
+{% else %}
+{{ key }} = {{ value | to_json }}
+{% endif %}
+{% endfor %}
+
+{% endfor %}

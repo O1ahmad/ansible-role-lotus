@@ -1,0 +1,91 @@
+---
+#######  Authentication setup #######
+
+- name: Ensure Lotus group exists
+  group:
+    name: "{{ lotus_user }}"
+    state: present
+  become: true
+
+- name: Create Lotus user
+  user:
+    comment: Lotus service account
+    name: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+    create_home: "no"
+  become: true
+
+#######  Source installation #######
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: update CL dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev
+
+- name: Add Go-lang backports repository to sources list
+  become: true
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: update dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - golang-go
+    - gcc
+    - git
+    - bzr
+    - jq
+    - pkg-config
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev
+
+- name: Ensure existence of installation directory
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+
+- name: Clone lotus git repo
+  git:
+    repo: https://github.com/filecoin-project/lotus.git
+    version: v0.1.0
+    dest: "{{ install_dir }}"
+
+- name: Clean source dir
+  become: true
+  make:
+    chdir: "{{ install_dir }}"
+    target: clean
+
+- name: Make lotus source
+  become: true
+  make:
+    chdir: "{{ install_dir }}"
+    target: all
+
+- name: Install lotus source
+  become: true
+  make:
+    chdir: "{{ install_dir }}"
+    target: install
