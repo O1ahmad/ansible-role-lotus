@@ -1,6 +1,38 @@
 ---
-- name: Install Kibana rpm
+#######  Source installation #######
+
+- name: upgrade all packages
   yum:
-    name: "{{ package_tmp.dest }}"
+    name: "*"
+    state: latest
+
+- name: Download and extract Go-lang
+  become: true
+  unarchive:
+    src: "{{ go_url }}"
+    dest: "{{ go_install_dir }}"
+    mode: '0775'
+    remote_src: 'yes'
+
+- name: Create a symbolic link to /usr/local/bin/go
+  become: true
+  file:
+    src: "{{ go_install_dir }}/go/bin/go"
+    dest: /usr/local/bin/go
+    state: link
+
+- name: update dependencies
+  become: true
+  package:
+    name: "{{ item }}"
     state: present
-  when: install_type == "package"
+  loop:
+    - gcc
+    - make
+    - findutils
+    - git
+    - bzr
+    - jq
+    - opencl-headers
+    - ocl-icd-devel
+    - pkgconfig
