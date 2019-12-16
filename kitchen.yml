@@ -100,3 +100,15 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/install/git_install
+  - name: config_toml
+    provisioner:
+      playbook: test/integration/install/config_toml/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/install/config_toml
+  - name: service_launch
+    provisioner:
+      playbook: test/integration/install/service_launch/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/install/service_launch

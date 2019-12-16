@@ -1,0 +1,16 @@
+---
+- name: Default playbook for testing
+  hosts: test-kitchen
+  roles:
+    - ansible-role-lotus
+  vars:
+    config:
+      API:
+        ListenAddress: "/ip4/0.0.0.0/tcp/1234/http"
+        Timeout: "30s"
+      Libp2p:
+        ListenAddresses: '["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]'
+      Metrics:
+        Nickname: "nightcrawler"
+        HeadNotifs: "true"
+        PubsubTracing: "true"

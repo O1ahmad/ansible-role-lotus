@@ -19,5 +19,5 @@
     group: "{{ ansible_env.SUDO_USER }}"
     mode: 0644
   vars:
-    config: "{{ config }}"
+    conf: "{{ config }}"
   when: config is defined and config is not none

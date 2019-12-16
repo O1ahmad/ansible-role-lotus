@@ -1,7 +1,7 @@
 # Managed by Ansible (0xOI/ansible-role-lotus)
-# seei --- for more details
+# see https://docs.lotu.sh/en+getting-started for more details
 
-{% for section in config %}
+{% for section in conf %}
 [{{ section.key }}]
 {% for key, value in section %}
 {% if value is string %}
