@@ -1,16 +1,14 @@
-title "Kibana service installation suite"
+title "Lotus git installation test suite"
 
-describe user('kibana') do
+describe file('/opt/lotus') do
   it { should exist }
 end
 
-describe group('kibana') do
+describe file('/usr/local/bin/lotus') do
   it { should exist }
+  its('mode') { should cmp '00755' }
 end
 
-describe file('/opt/kibana/bin/kibana') do
-  it { should exist }
-  its('owner') { should eq 'kibana' }
-  its('group') { should eq 'kibana' }
-  its('mode') { should cmp '0775' }
+describe command('lotus version') do
+  its('exit_status') { should eq 0 }
 end
