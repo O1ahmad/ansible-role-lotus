@@ -1,0 +1,23 @@
+---
+- debug:
+    var: config
+
+- name: Ensure existence of config dir
+  become: true
+  file:
+    path: "{{ ansible_env.HOME }}/.lotus"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    state: directory
+
+- name: Copy Lotus configuration in place
+  become: true
+  template:
+    src: "{{ lotus_config_file }}.j2"
+    dest: "{{ ansible_env.HOME }}/.lotus/{{ lotus_config_file }}"
+    owner: "{{ ansible_env.SUDO_USER }}"
+    group: "{{ ansible_env.SUDO_USER }}"
+    mode: 0644
+  vars:
+    config: "{{ config }}"
+  when: config is defined and config is not none

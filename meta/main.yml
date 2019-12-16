@@ -1,0 +1,30 @@
+---
+# role metadata file
+galaxy_info:
+  author: Ahmad Wilson
+  role_name: Lotus
+  description: Lotus, an implementation of the Filecoin distributed storage network protocol written in Go
+  company: "O1.IO"
+  license: license (Apache, BSD, MIT)
+  min_ansible_version: 2.6
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+
+  galaxy_tags:
+    - lotus
+    - filecoin
+    - ipfs
+    - storage
+    - blockchain
+    - miner

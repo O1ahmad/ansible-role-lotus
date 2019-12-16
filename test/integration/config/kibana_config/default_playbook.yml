@@ -1,0 +1,13 @@
+---
+- name: Default playbook for testing
+  hosts: test-kitchen
+  roles:
+    - ansible-role-kibana
+  vars:
+    install_type: archive
+    config:
+      server.name: kibana-test
+      path.data: /mnt/data/kibana
+      logging:
+        verbose: true
+        json: true
