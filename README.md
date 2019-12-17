@@ -39,108 +39,65 @@ Variables are available and organized according to the following software & mach
 
 #### Install
 
-`lotus`can be installed using OS package management systems (e.g `apt`, `yum`) or compressed archives (`.tar`, `.zip`) downloaded and extracted from various sources.
+`lotus`can be installed using compressed archives (`.tar`, `.zip`) downloaded and extracted from various sources or built from *git* source.
 
 _The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
 
-`install_type: <package | archive>` (**default**: archive)
-- **package**: supported by Debian and Redhat distributions, package installation of Elasticsearch pulls the specified package available from the respective package management repositories.
-  - Note that the installation directory is determined by the package management system and currently defaults to `/usr/share` for both distros. Attempts to set and execute a package installation on other Linux distros will result in failure due to lack of support.
-- **archive**: compatible with both **tar and zip** formats, archived installation binaries can be obtained from local and remote compressed archives either from the official [download/releases](https://www.elastic.co/downloads/elasticsearch) site or those generated from development/custom sources.
+`install_type: <archive | source>` (**default**: archive)
+- **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the glibc The GNU libc libraries package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
 
-`default_install_dir: </path/to/installation/dir>` (**default**: `/opt/elasticsearch`)
-- path on target host where the `elasticsearch` binaries should be extracted to. *ONLY* relevant when `install_type` is set to **archive**.
+  note: archived installation binaries can be obtained from the official [releases](https://github.com/filecoin-project/lotus/releases) site or those generated from development/custom sources
+
+- **source**: build lotus network client and storage miner binaries from source. This installation process consists of cloning the github hosted [repository](https://github.com/filecoin-project/lotus) and building from source code using `make` directives. See [here]((https://docs.lotu.sh/en+install-lotus-ubuntu) for more details on building from source.
+
+`install_dir: </path/to/installation/dir>` (**default**: `/opt/lotus`)
+- path on target host where the `lotus` binaries should be extracted to.
 
 `archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
-- address of a compressed **tar or zip** archive containing `elasticsearch` binaries. This method technically supports installation of any available version of `elasticsearch`. Links to official versions can be found [here](https://www.elastic.co/downloads/past-releases#elasticsearch). *ONLY* relevant when `install_type` is set to **archive**
+- address of a compressed **tar or zip** archive containing `lotus` binaries. This method technically supports installation of any available version of `lotus`. Links to official versions can be found [here](https://github.com/filecoin-project/lotus/releases). *ONLY* relevant when `install_type` is set to **archive**
 
 `archive_checksum: <path-or-url-to-checksum>` (**default**: see `defaults/main.yml`)
 - address of a checksum file for verifying the data integrity of the specified archive. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value. *ONLY* relevant when `install_type` is set to **archive**.
 
-`package_url: <path-or-url-to-package>` (**default**: see `defaults/main.yml`)
-- address of a **Debian or RPM** package containing `elasticsearch` source and binaries. Note that the installation layout is determined by the package management systems. Consult Elastic's official documentation for both [RPM](https://www.elastic.co/guide/en/elasticsearch/reference/current/rpm.html) and [Debian](https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html) installation details. *ONLY* relevant when `install_type` is set to **package**
-
-`package_checksum: <path-or-url-to-checksum>` (**default**: see `vars/...`)
-- address of a checksum file for verifying the data integrity of the specified package. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value. *ONLY* relevant when `install_type` is set to **package**.
-
 `checksum_format: <string>` (**default**: see `sha512`)
 - hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about checksums/cryptographic hashes.
 
+`git_url: <path-or-url-to-git-repo>` (**default**: see `defaults/main.yml`)
+- address of `lotus` git repository. Address can reference Github site address or custom source hosted on alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
+
+`version: <string>` (**default**: `v0.1.0`)
+- version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name. *ONLY* relevant when `install_type` is set to **source**.
+
+`go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
+- address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
+
 #### Config
 
-Configuration of `elasticsearch` is expressed within 3 files:
-- `elasticsearch.yml` for configuring Elasticsearch
-- `jvm.options` for configuring Elasticsearch JVM settings
-- `log4j2.properties` for configuring Elasticsearch logging
+Configuration of the `lotus` client can be expressed in a config file written in [TOML](https://github.com/toml-lang/toml), a minimal markup language. To get an idea how the config should look, reference this [example](https://gist.github.com/0x0I/dd3e7e4fbb1b9feaf147c216ebfacff0) (installed by default).
 
-These files are located in the config directory; which as previously mentioned, the location depends on whether or not the installation is from an archive distribution (tar.gz or zip) or a package distribution (Debian or RPM packages).
+_The following variables can be customized to manage the content of this TOML configuration:_
 
-For additional details and to get an idea how each config should look, reference Elastic's official [configuration](https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html) documentation.
+`config: {"<config-section>": {"<section-setting>": "<setting-value>",..},..}` **default**: see `defaults/main.yml`
 
-_The following variables can be customized to manage the location and content of these configuration files:_
+* Any configuration setting/value key-pair supported by `lotus` should be expressible within the `config` hash and properly rendered within the associated TOML config. Values can be expressed in typical _yaml/ansible_ form (e.g. Strings, numbers and true/false values should be written as is and without quotes).
 
-`default_config_dir: </path/to/configuration/dir>` (**default**: `/opt/elasticsearch/config`)
-- path on target host where the aforementioned configuration files should be stored
+  Furthermore, configuration is not constrained by hardcoded author defined defaults or limited by pre-baked templating. If the config section, setting and value are recognized by the `lotus` tool, :thumbsup: to define within `config`.
 
-`managed_configs: <list of configs to manage>` (**default**: see `defaults/main.yml`)
-- list of configuration files to manage with this Ansible role
-
-  Allowed values are any combination of:
-  - `elasticsearch_config`
-  - `jvm_options`
-  - `log4j_properties`
-
-`config: <hash-of-elasticsearch-settings>` **default**: {}
-
-- The configuration files should contain settings which are node-specific (such as node.name and paths), or settings which a node requires in order to be able to join a cluster. Any configuration setting/value key-pair supported by `elasticsearch` should be expressible within the hash and properly rendered within the associated YAML config.
-
-Values can be expressed in typical _yaml/ansible_ form (e.g. Strings, numbers and true/false values should be written as is and without quotes).
-
-  Keys of the `config` hash can be either nested or delimited by a '.':
+  Keys of the `config` hash represent TOML config sections:
   ```yaml
   config:
-    node.name: example-node
-    path:
-      logs: /var/log/elasticsearch
+    # [TOML Section 'API']
+    API: {}
   ```
 
-A list of configurable settings can be found [here](https://github.com/elastic/elasticsearch/tree/master/docs/reference/modules).
-
-`jvm_options: <list-of-dicts>` **default**: `[]`
-
-- The preferred method of setting JVM options (including system properties and JVM flags) is via the jvm.options configuration file. The file consists of a line-delimited list of arguments used to modify the behavior of Elasticsearch's JVM.
-
-While you should rarely need to change Java Virtual Machine (JVM) options; there are situations (e.g.insufficient heap size allocation by default) in which adjustments may be necessary. Each entry within the list of dicts consists of a hash containing an *optional* `comment` field and list of associated arguments to configure:
-
+  Values of `config[<key>]` represent key,value pairs within an embedded hash expressing config settings:
   ```yaml
-  jvm_options:
-      - comment: set the min and max JVM heap size (to the same value)
-        arguments:
-          - '-Xms1g'
-          - '-Xmx1g'
+  config:
+    # TOML Section '[API]'
+    API:
+      # Section setting ListenAddress with value of localhost binding at port 1234
+      ListenAddress = "/ip4/127.0.0.1/tcp/1234/http"
   ```
-
-  A list of available arguments can be found [here](https://docs.oracle.com/javase/8/docs/technotes/tools/windows/java.html).
-
-`log4j_properties: <list-of-dicts>` **default**: `[]`
-
-- The preferred method of setting JVM options (including system properties and JVM flags) is via the jvm.options configuration file. The file consists of a line-delimited list of arguments used to modify the behavior of Elasticsearch's JVM.
-
-While you should rarely need to change Java Virtual Machine (JVM) options; there are situations (e.g.insufficient heap size allocation by default) in which adjustments may be necessary. Each entry within the list of dicts consists of a hash containing an *optional* `comment` field and list of associated arguments to configure:
-
-  ```yaml
-  log4j2_properties:
-      - comment: log action execution errors for easier debugging
-        settings:
-          - logger.action.name: org.elasticsearch.action
-            logger.action.level: debug
-  ```
-
-`default_data_dir: </path/to/data/dir>` (**default**: `/var/data/elasticsearch`)
-- path on target host where data generated by the Elasticsearch service (e.g. indexed records) should be stored
-
-`default_log_dir: </path/to/log/dir>` (**default**: `/var/log/elasticsearch`)
-- path on target host where logs generated by the Elasticsearch service should be stored
 
 #### Launch
 
@@ -157,7 +114,7 @@ default example:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.elasticsearch
+  - role: 0xOI.lotus
 ```
 
 License
