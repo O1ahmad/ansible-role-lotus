@@ -12,7 +12,7 @@
   git:
     repo: "{{ git_url }}"
     dest: "{{ install_dir }}"
-    version: "{{ version }}"
+    version: "{{ git_version }}"
   when: install_type == "source"
 
 - name: Make clean source
