@@ -71,6 +71,9 @@ _The following variables can be customized to control various aspects of this in
 `go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
 
+`go_install_dir: </path/to/install/dir>` (**default**: `/usr/local`)
+- path on target host where the `go` binaries should be extracted to.
+
 #### Config
 
 Configuration of the `lotus` client can be expressed in a config file written in [TOML](https://github.com/toml-lang/toml), a minimal markup language. To get an idea how the config should look, reference this [example](https://gist.github.com/0x0I/dd3e7e4fbb1b9feaf147c216ebfacff0) (installed by default).
@@ -101,7 +104,23 @@ _The following variables can be customized to manage the content of this TOML co
 
 #### Launch
 
-...*description of service launch related vars*...
+Running the `lotus` distributed storage network protocol service along with its API server is accomplished utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool for both *archive* and *source* installations. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying management framework, launch of `lotus` can be set to adhere to system administrative policies right for your environment and organization.
+
+_The following variables can be customized to manage the service's **systemd** service unit definition and execution profile/policy:_
+
+`extra_run_args: <lotus-cli-options>` (**default**: `[]`)
+- list of `lotus daemon` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus daemon`'s cli, this variable enables the launch to be customized according to the user's specification.
+
+`custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
+- hash of settings used to customize the [Service] unit configuration and execution environment of the Lotus **systemd** service.
+
+```yaml
+custom_unit_properties:
+  WorkingDirectory: /path/to/client/dir
+```
+
+Reference the [systemd.service](http://man7.org/linux/man-pages/man5/systemd.service.5.html) *man* page for a configuration overview and reference.
+
 
 Dependencies
 ------------
@@ -115,6 +134,17 @@ default example:
 - hosts: all
   roles:
   - role: 0xOI.lotus
+```
+
+install `lotus` from specified *git* source version:
+```
+- hosts: all
+  roles:
+  - role: 0xOI.lotus
+    vars:
+      install_type: source
+      git_url: https://github.com/filecoin-project/lotus.git
+      git_version: v0.1.1 
 ```
 
 License
