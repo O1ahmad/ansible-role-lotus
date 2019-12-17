@@ -1,6 +1,52 @@
 ---
-- name: Install Kibana debian package
+#######  Source installation #######
+
+- name: Update and upgrade apt packages
+  become: true
   apt:
-    deb: "{{ package_tmp.dest }}"
+    upgrade: 'yes'
+    update_cache: 'yes'
+
+- name: update CL dependencies
+  become: true
+  package:
+    name: "{{ item }}"
     state: present
-  when: install_type == "package"
+  loop:
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev
+
+- name: Download and extract Go-lang
+  become: true
+  unarchive:
+    src: "{{ go_url }}"
+    dest: "{{ go_install_dir }}"
+    mode: '0775'
+    remote_src: 'yes'
+
+- name: Create a symbolic link to /usr/local/bin/go
+  become: true
+  file:
+    src: "{{ go_install_dir }}/go/bin/go"
+    dest: /usr/local/bin/go
+    state: link
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: 'yes'
+
+- name: update dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - gcc
+    - make
+    - git
+    - bzr
+    - jq
+    - pkg-config
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev

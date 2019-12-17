@@ -2,8 +2,8 @@
 # see https://docs.lotu.sh/en+getting-started for more details
 
 {% for section in conf %}
-[{{ section.key }}]
-{% for key, value in section %}
+[{{ section }}]
+{% for key, value in config[section].items() %}
 {% if value is string %}
 {{ key }} = "{{ value }}"
 {% else %}

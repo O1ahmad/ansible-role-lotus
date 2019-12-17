@@ -9,8 +9,8 @@
         ListenAddress: "/ip4/0.0.0.0/tcp/1234/http"
         Timeout: "30s"
       Libp2p:
-        ListenAddresses: '["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]'
+        ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
       Metrics:
-        Nickname: "nightcrawler"
-        HeadNotifs: "true"
-        PubsubTracing: "true"
+        Nickname: "test-example"
+        HeadNotifs: true
+        PubsubTracing: true

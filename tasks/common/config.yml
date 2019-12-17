@@ -1,7 +1,4 @@
 ---
-- debug:
-    var: config
-
 - name: Ensure existence of config dir
   become: true
   file:

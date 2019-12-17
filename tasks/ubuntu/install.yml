@@ -1,0 +1,43 @@
+---
+#######  Source installation #######
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: 'yes'
+    update_cache: 'yes'
+
+- name: update CL dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev
+
+- name: Add Go-lang backports repository to sources list
+  become: true
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: 'yes'
+    update_cache: 'yes'
+
+- name: update dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - golang-go
+    - gcc
+    - git
+    - bzr
+    - jq
+    - pkg-config
+    - mesa-opencl-icd
+    - ocl-icd-opencl-dev

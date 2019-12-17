@@ -9,6 +9,6 @@ describe file('/usr/local/bin/lotus') do
   its('mode') { should cmp '00755' }
 end
 
-describe command('lotus version') do
+describe command('/usr/local/bin/lotus --help') do
   its('exit_status') { should eq 0 }
 end

@@ -1,7 +1,4 @@
 ---
-- debug:
-    var: ansible_env
-
 - name: Set unit [Service] configuration
   set_fact:
     default_service_unit:

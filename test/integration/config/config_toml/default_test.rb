@@ -1,4 +1,4 @@
-title "Elasticsearch elasticsearch.yml configuration test suite"
+title "Lotus config.toml configuration test suite"
 
 describe file('/home/kitchen/.lotus/config.toml') do
   it { should exist }
@@ -15,18 +15,4 @@ describe file('/home/kitchen/.lotus/config.toml') do
   its('content') { should match("Nickname =") }
   its('content') { should match("HeadNotifs =") }
   its('content') { should match("PubsubTracing =") }
-end
-
-describe directory('/mnt/logs/elasticsearch') do
-  it { should exist }
-  its('owner') { should eq 'elasticsearch' }
-  its('group') { should eq 'elasticsearch' }
-  its('mode') { should cmp '0755' }
-end
-
-describe directory('/mnt/data/elasticsearch') do
-  it { should exist }
-  its('owner') { should eq 'elasticsearch' }
-  its('group') { should eq 'elasticsearch' }
-  its('mode') { should cmp '0755' }
 end

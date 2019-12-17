@@ -5,5 +5,5 @@
     - ansible-role-lotus
   vars:
     extra_run_args:
-      - '--verbose'
+      - '--bootstrap'
     custom_unit_properties: {}

@@ -13,7 +13,7 @@ system_dependencies:
 
 install_dir: /opt/lotus
 
-go_url: https://dl.google.com/go/go1.13.5.src.tar.gz
+go_url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
 go_install_dir: /usr/local
 
 git_url: https://github.com/filecoin-project/lotus.git
