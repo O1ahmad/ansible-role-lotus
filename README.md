@@ -39,16 +39,16 @@ Variables are available and organized according to the following software & mach
 
 #### Install
 
-`lotus`can be installed using compressed archives (`.tar`, `.zip`) downloaded and extracted from various sources or built from *git* source.
+`lotus`can be installed using compressed archives (`.tar`, `.zip`), downloaded and extracted from various sources, or built from *git* source.
 
 _The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
 
 `install_type: <archive | source>` (**default**: archive)
-- **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the glibc The GNU libc libraries package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
+- **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the `glibc` *GNU libc libraries* package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
 
-  note: archived installation binaries can be obtained from the official [releases](https://github.com/filecoin-project/lotus/releases) site or those generated from development/custom sources
+  **note:** archived installation binaries can be obtained from the official [releases](https://github.com/filecoin-project/lotus/releases) site or those generated from development/custom sources.
 
-- **source**: build lotus network client and storage miner binaries from source. This installation process consists of cloning the github hosted [repository](https://github.com/filecoin-project/lotus) and building from source code using `make` directives. See [here]((https://docs.lotu.sh/en+install-lotus-ubuntu) for more details on building from source.
+- **source**: build *lotus network client* and *storage miner* binaries from source. This installation process consists of cloning the github hosted [repository](https://github.com/filecoin-project/lotus) and building from source code using `make` directives. See [here](https://docs.lotu.sh/en+install-lotus-ubuntu) for more details on building from source.
 
 `install_dir: </path/to/installation/dir>` (**default**: `/opt/lotus`)
 - path on target host where the `lotus` binaries should be extracted to.
@@ -60,10 +60,10 @@ _The following variables can be customized to control various aspects of this in
 - address of a checksum file for verifying the data integrity of the specified archive. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value. *ONLY* relevant when `install_type` is set to **archive**.
 
 `checksum_format: <string>` (**default**: see `sha512`)
-- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about checksums/cryptographic hashes.
+- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes.
 
 `git_url: <path-or-url-to-git-repo>` (**default**: see `defaults/main.yml`)
-- address of `lotus` git repository. Address can reference Github site address or custom source hosted on alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
+- address of `lotus` git repository. Address can reference the Github site address or custom source hosted on an alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
 
 `version: <string>` (**default**: `v0.1.0`)
 - version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name. *ONLY* relevant when `install_type` is set to **source**.
@@ -112,7 +112,7 @@ _The following variables can be customized to manage the service's **systemd** s
 - list of `lotus daemon` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus daemon`'s cli, this variable enables the launch to be customized according to the user's specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
-- hash of settings used to customize the [Service] unit configuration and execution environment of the Lotus **systemd** service.
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the Lotus **systemd** service.
 
 ```yaml
 custom_unit_properties:
