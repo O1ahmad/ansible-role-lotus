@@ -1,0 +1,38 @@
+---
+#######  Archive installation #######
+
+- name: Create installation directory
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+
+- name: Download Lotus archive ({{ archive_url }})
+  get_url:
+    url: "{{ archive_url }}"
+    dest: "/tmp/{{ archive_url | urlsplit('path') | basename }}"
+    checksum: "{{ checksum_format }}:{{ archive_checksum }}"
+    mode: '0775'
+  register: archive_tmp
+  become: true
+  when: install_type == "archive"
+
+- name: Extract Locust archive
+  unarchive:
+    src: "{{ archive_tmp.dest }}"
+    dest: "{{ install_dir }}"
+    mode: '0775'
+    extra_opts:
+      - --strip-components
+      - '1'
+    remote_src: true
+  become: true
+  when: install_type == "archive"
+
+- name: Create a symbolic link to /usr/local/bin/lotus
+  become: true
+  file:
+    src: "{{ install_dir }}/lotus"
+    dest: /usr/local/bin/lotus
+    state: link
+  when: install_type == "archive"

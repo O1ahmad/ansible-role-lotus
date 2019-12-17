@@ -16,7 +16,7 @@
       skip: true
 
 - name: Include common installation tasks
-  include_tasks: "common/install.yml"
+  include_tasks: "common/{{ install_type }}_install.yml"
 
 - name: Include common configuration tasks
   include_tasks: "common/config.yml"

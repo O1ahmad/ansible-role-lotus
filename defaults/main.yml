@@ -1,22 +1,19 @@
 ---
 # defaults variable file
-lotus_user: lotus
+system_dependencies: []
 
-system_dependencies:
-  - gcc
-  - git
-  - bzr
-  - jq
-  - pkg-config
-  - mesa-opencl-icd
-  - ocl-icd-opencl-dev
-
+install_type: source
 install_dir: /opt/lotus
 
 go_url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
 go_install_dir: /usr/local
 
+archive_url: https://github.com/filecoin-project/lotus/releases/download/v0.1.0/lotus_v0.1.0_linux-amd64.tar.gz
+archive_checksum: https://github.com/filecoin-project/lotus/releases/download/v0.1.0/lotus_v0.1.0_linux-amd64.tar.gz.sha512
+checksum_format: sha512
+
 git_url: https://github.com/filecoin-project/lotus.git
+version: v0.1.0
 
 lotus_config_file: config.toml
 config: {}

@@ -1,0 +1,10 @@
+system_dependencies:
+  - gcc
+  - make
+  - findutils
+  - git
+  - bzr
+  - jq
+  - opencl-headers
+  - ocl-icd-devel
+  - pkgconfig

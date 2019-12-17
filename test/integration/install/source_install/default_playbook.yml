@@ -3,3 +3,5 @@
   hosts: test-kitchen
   roles:
     - ansible-role-lotus
+  vars:
+    install_type: source
