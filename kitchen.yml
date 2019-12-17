@@ -88,12 +88,22 @@ platforms:
         - systemctl enable ssh.service
 
 suites:
-  - name: git_install
+  - name: archive_install
     provisioner:
-      playbook: test/integration/install/git_install/default_playbook.yml
+      playbook: test/integration/install/archive_install/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/install/git_install
+        - path: test/integration/install/archive_install
+    excludes:
+      - centos-7
+      - debian-8
+      - debian-9
+  - name: source_install
+    provisioner:
+      playbook: test/integration/install/source_install/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/install/source_install
   - name: config_toml
     provisioner:
       playbook: test/integration/config/config_toml/default_playbook.yml

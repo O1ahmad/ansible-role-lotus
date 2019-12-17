@@ -26,13 +26,4 @@
   package:
     name: "{{ item }}"
     state: present
-  loop:
-    - gcc
-    - make
-    - findutils
-    - git
-    - bzr
-    - jq
-    - opencl-headers
-    - ocl-icd-devel
-    - pkgconfig
+  loop: "{{ system_dependencies }}"

@@ -1,0 +1,9 @@
+system_dependencies:
+  - golang-go
+  - gcc
+  - git
+  - bzr
+  - jq
+  - pkg-config
+  - mesa-opencl-icd
+  - ocl-icd-opencl-dev

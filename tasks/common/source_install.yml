@@ -1,20 +1,4 @@
 ---
-#######  Authentication setup #######
-
-- name: Ensure Lotus group exists
-  group:
-    name: "{{ lotus_user }}"
-    state: present
-  become: true
-
-- name: Create Lotus user
-  user:
-    comment: Lotus service account
-    name: "{{ lotus_user }}"
-    group: "{{ lotus_user }}"
-    create_home: "no"
-  become: true
-
 #######  Source installation #######
 
 - name: Create installation directory
@@ -28,15 +12,17 @@
   git:
     repo: "{{ git_url }}"
     dest: "{{ install_dir }}"
-    version: "v0.1.0"
+    version: "{{ version }}"
+  when: install_type == "source"
 
-- name: Reset state of source
+- name: Make clean source
   become: true
   make:
     chdir: "{{ install_dir }}"
     target: clean
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  when: install_type == "source"
 
 - name: Build source package
   become: true
@@ -45,6 +31,7 @@
     target: all
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  when: install_type == "source"
 
 - name: Install lotus client and miner software
   become: true
@@ -53,3 +40,4 @@
     target: install
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  when: install_type == "source"

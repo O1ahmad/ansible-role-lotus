@@ -7,15 +7,6 @@
     upgrade: 'yes'
     update_cache: 'yes'
 
-- name: update CL dependencies
-  become: true
-  package:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - mesa-opencl-icd
-    - ocl-icd-opencl-dev
-
 - name: Download and extract Go-lang
   become: true
   unarchive:
@@ -41,12 +32,4 @@
   package:
     name: "{{ item }}"
     state: present
-  loop:
-    - gcc
-    - make
-    - git
-    - bzr
-    - jq
-    - pkg-config
-    - mesa-opencl-icd
-    - ocl-icd-opencl-dev
+  loop: "{{ system_dependencies }}"
