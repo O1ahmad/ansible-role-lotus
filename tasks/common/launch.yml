@@ -3,8 +3,8 @@
   set_fact:
     default_service_unit:
       ExecStart: "/usr/local/bin/lotus daemon {{ extra_run_args|join(' ') }}"
-      User: "{{ ansible_env.SUDO_USER }}"
-      Group: "{{ ansible_env.SUDO_USER }}"
+      User: "{{ lotus_user }}"
+      Group: "{{ lotus_user }}"
       StandardOutput: journal
       StandardError: inherit
 

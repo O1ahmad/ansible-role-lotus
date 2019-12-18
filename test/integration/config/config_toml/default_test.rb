@@ -1,9 +1,9 @@
 title "Lotus config.toml configuration test suite"
 
-describe file('/home/kitchen/.lotus/config.toml') do
+describe file('/home/lotus/.lotus/config.toml') do
   it { should exist }
-  its('owner') { should eq 'kitchen' }
-  its('group') { should eq 'kitchen' }
+  its('owner') { should eq 'lotus' }
+  its('group') { should eq 'lotus' }
   its('mode') { should cmp '0644' }
 
   its('content') { should match("[API]") }
