@@ -6,6 +6,8 @@
   file:
     path: "{{ install_dir }}"
     state: directory
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
 
 - name: Download Lotus archive ({{ archive_url }})
   get_url:
@@ -22,6 +24,8 @@
     src: "{{ archive_tmp.dest }}"
     dest: "{{ install_dir }}"
     mode: '0775'
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
     extra_opts:
       - --strip-components
       - '1'

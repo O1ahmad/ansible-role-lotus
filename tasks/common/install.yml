@@ -1,0 +1,16 @@
+---
+- name: Ensure Lotus group exists
+  group:
+    name: "{{ lotus_user }}"
+    state: present
+  become: true
+
+- name: Create Lotus user
+  user:
+    comment: Lotus service account
+    name: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+  become: true
+
+- name: perform designated installation procedure
+  include_tasks: "common/{{ install_type }}_install.yml"

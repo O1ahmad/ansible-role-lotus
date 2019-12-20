@@ -6,6 +6,8 @@
   file:
     path: "{{ install_dir }}"
     state: directory
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
 
 - name: Clone lotus git repository
   become: true

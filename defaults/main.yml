@@ -2,6 +2,8 @@
 # defaults variable file
 system_dependencies: []
 
+lotus_user: lotus
+
 install_type: source
 install_dir: /opt/lotus
 
