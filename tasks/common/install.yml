@@ -21,4 +21,4 @@
     state: directory
 
 - name: perform designated installation procedure
-  include_tasks: "common/{{ install_type }}_install.yml"
+  include_tasks: "common/install/{{ install_type }}_install.yml"

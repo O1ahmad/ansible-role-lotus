@@ -25,7 +25,11 @@ config: {}
 lotus_storage_path: /var/data/lotus
 
 extra_run_args: []
+extra_miner_args: []
 
 perform_uninstall: false
 
 custom_unit_properties: {}
+custom_miner_properties: {}
+
+managed_services: ['service', 'miner']
