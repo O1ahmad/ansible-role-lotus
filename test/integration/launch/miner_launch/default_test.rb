@@ -1,13 +1,13 @@
-title "Lotus storage client/service launch test suite"
+title "Lotus storage miner launch test suite"
 
-describe file('/etc/systemd/system/lotus.service') do
+describe file('/etc/systemd/system/lotus-storage-miner.service') do
   it { should exist }
   its('owner') { should eq 'root' }
   its('group') { should eq 'root' }
   its('mode') { should cmp '0644' }
 end
 
-describe service('lotus') do
+describe service('lotus-storage-miner') do
   it { should be_installed }
   it { should be_enabled }
   it { should be_running }

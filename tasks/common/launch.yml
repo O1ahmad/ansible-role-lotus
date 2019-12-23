@@ -1,31 +1,4 @@
 ---
-- name: Set unit [Service] configuration
-  set_fact:
-    default_service_unit:
-      ExecStart: "/usr/local/bin/lotus daemon {{ extra_run_args|join(' ') }}"
-      User: "{{ lotus_user }}"
-      Group: "{{ lotus_user }}"
-      StandardOutput: journal
-      StandardError: inherit
-      Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
-
-- name: Setup Lotus systemd unit
-  include_role:
-    name: 0x0i.systemd
-  vars:
-    unit_config:
-      - name: lotus
-        Unit:
-          Description: Lotus
-          Documentation: https://docs.lotu.sh/
-          Wants: network-online.target
-          After: network-online.target
-        Service: "{{ default_service_unit | combine(custom_unit_properties) }}"
-        Install:
-          WantedBy: multi-user.target
-
-- name: Ensure start of lotus daemon service
-  service:
-    name: lotus
-    state: started
-    enabled: "yes"
+- name: perform designated service launch procedures
+  include_tasks: "common/launch/{{ item }}_launch.yml"
+  loop: "{{ managed_services }}"

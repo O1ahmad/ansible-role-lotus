@@ -1,0 +1,31 @@
+---
+- name: Set unit [Service] configuration
+  set_fact:
+    default_miner_unit:
+      ExecStart: "/usr/local/bin/lotus-storage-miner run {{ extra_miner_args|join(' ') }}"
+      User: "{{ lotus_user }}"
+      Group: "{{ lotus_user }}"
+      StandardOutput: journal
+      StandardError: inherit
+      Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
+
+- name: Setup Lotus Storage Miner systemd unit
+  include_role:
+    name: 0x0i.systemd
+  vars:
+    unit_config:
+      - name: lotus-storage-miner
+        Unit:
+          Description: Lotus Storage Miner
+          Documentation: https://github.com/filecoin-project/lotus/blob/master/documentation/en/mining.md
+          Wants: network-online.target
+          After: network-online.target
+        Service: "{{ default_miner_unit | combine(custom_miner_properties) }}"
+        Install:
+          WantedBy: multi-user.target
+
+- name: Ensure start of lotus miner service
+  service:
+    name: lotus-storage-miner
+    state: started
+    enabled: "yes"

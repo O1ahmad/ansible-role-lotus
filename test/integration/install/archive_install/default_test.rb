@@ -1,4 +1,4 @@
-title "Lotus git installation test suite"
+title "Lotus archive installation test suite"
 
 describe directory('/opt/lotus') do
   it { should exist }
