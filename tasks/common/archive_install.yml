@@ -1,14 +1,6 @@
 ---
 #######  Archive installation #######
 
-- name: Create installation directory
-  become: true
-  file:
-    path: "{{ install_dir }}"
-    state: directory
-    owner: "{{ lotus_user }}"
-    group: "{{ lotus_user }}"
-
 - name: Download Lotus archive ({{ archive_url }})
   get_url:
     url: "{{ archive_url }}"

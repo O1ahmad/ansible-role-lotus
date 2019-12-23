@@ -12,5 +12,13 @@
     group: "{{ lotus_user }}"
   become: true
 
+- name: Ensure existence of install dir
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+    state: directory
+
 - name: perform designated installation procedure
   include_tasks: "common/{{ install_type }}_install.yml"
