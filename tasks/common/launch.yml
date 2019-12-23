@@ -7,6 +7,7 @@
       Group: "{{ lotus_user }}"
       StandardOutput: journal
       StandardError: inherit
+      Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
 
 - name: Setup Lotus systemd unit
   include_role:

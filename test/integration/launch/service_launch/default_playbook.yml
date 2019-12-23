@@ -4,6 +4,16 @@
   roles:
     - ansible-role-lotus
   vars:
+    version: v0.1.5
+    config:
+      API:
+        ListenAddress: "/ip4/0.0.0.0/tcp/1234/http"
+        Timeout: "30s"
+      Libp2p:
+        ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
+      Metrics:
+        Nickname: "test-example"
+        HeadNotifs: true
+        PubsubTracing: true
     extra_run_args:
       - '--bootstrap'
-    custom_unit_properties: {}

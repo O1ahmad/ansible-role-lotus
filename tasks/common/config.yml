@@ -2,7 +2,7 @@
 - name: Ensure existence of config dir
   become: true
   file:
-    path: "/home/{{ lotus_user }}/.lotus"
+    path: "{{ lotus_path }}"
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     state: directory
@@ -11,10 +11,18 @@
   become: true
   template:
     src: "{{ lotus_config_file }}.j2"
-    dest: "/home/{{ lotus_user }}/.lotus/{{ lotus_config_file }}"
+    dest: "{{ lotus_path }}/{{ lotus_config_file }}"
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     mode: 0644
   vars:
     conf: "{{ config }}"
   when: config is defined and config is not none
+
+- name: Ensure existence of Lotus storage path
+  become: true
+  file:
+    path: "{{ lotus_storage_path }}"
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+    state: directory
