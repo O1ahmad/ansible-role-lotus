@@ -22,3 +22,12 @@
 
 - name: perform designated installation procedure
   include_tasks: "common/install/{{ install_type }}_install.yml"
+
+- name: Add lotus paths to lotus user default environment
+  lineinfile:
+    dest: "/home/{{ lotus_user }}/.bashrc"
+    line: "{{ item }}"
+  become: true
+  loop:
+    - "export LOTUS_PATH={{ lotus_path }}"
+    - "export LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
