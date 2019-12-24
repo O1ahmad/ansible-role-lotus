@@ -5,6 +5,6 @@
     - ansible-role-lotus
   vars:
     version: v0.1.5
-    managed_services: ['miner']
+    managed_services: ['service', 'miner']
     extra_run_args:
-      - '--no-sync'
+      - '--bootstrap'
