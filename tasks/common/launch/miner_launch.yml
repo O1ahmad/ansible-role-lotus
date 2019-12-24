@@ -18,7 +18,7 @@
         Unit:
           Description: Lotus Storage Miner
           Documentation: https://github.com/filecoin-project/lotus/blob/master/documentation/en/mining.md
-          Wants: network-online.target
+          Wants: network-online.target lotus.service
           After: network-online.target
         Service: "{{ default_miner_unit | combine(custom_miner_properties) }}"
         Install:
