@@ -43,6 +43,9 @@ Variables are available and organized according to the following software & mach
 
 _The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
 
+`lotus_user: <service-user-name>` (**default**: *lotus*)
+- dedicated service user, group and directory used by `lotus` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
+
 `install_type: <archive | source>` (**default**: archive)
 - **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the `glibc` *GNU libc libraries* package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
 
@@ -68,6 +71,12 @@ _The following variables can be customized to control various aspects of this in
 `version: <string>` (**default**: `v0.1.0`)
 - version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name. *ONLY* relevant when `install_type` is set to **source**.
 
+`lotus_path: </path/to/runtime/dir>` (**default**: `/opt/lotus/.lotus`)
+- path on target host the `lotus` service should establish as its runtime configuration and data directory.
+
+`lotus_storage_path: </path/to/miner/data-dir>` (**default**: `/opt/lotus/.lotusstorage`)
+- path on target host the `lotus` service should establish as its runtime configuration and data directory.
+
 `go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
 
@@ -76,7 +85,7 @@ _The following variables can be customized to control various aspects of this in
 
 #### Config
 
-Configuration of the `lotus` client can be expressed in a config file written in [TOML](https://github.com/toml-lang/toml), a minimal markup language. To get an idea how the config should look, reference this [example](https://gist.github.com/0x0I/dd3e7e4fbb1b9feaf147c216ebfacff0) (installed by default).
+Configuration of the `lotus` client can be expressed in a config file written in [TOML](https://github.com/toml-lang/toml), a minimal markup language. **Note:** This file can be found under the directory specified by the `LOTUS_PATH` (for the lotus client/service) or `LOTUS_STORAGE_PATH` (for the lotus miner) environment variables. For an idea of the available configuration options, reference this [example](https://gist.github.com/0x0I/dd3e7e4fbb1b9feaf147c216ebfacff0) (installed by default).
 
 _The following variables can be customized to manage the content of this TOML configuration:_
 
@@ -104,19 +113,29 @@ _The following variables can be customized to manage the content of this TOML co
 
 #### Launch
 
-Running the `lotus` distributed storage network protocol service along with its API server is accomplished utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool for both *archive* and *source* installations. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying management framework, launch of `lotus` can be set to adhere to system administrative policies right for your environment and organization.
+Running the `lotus` distributed storage network protocol service/API server in addition to the `lotus-storage-miner` storage miner agent is accomplished utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool for both *archive* and *source* installations. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying management framework, launch of either service can be set to adhere to system administrative policies right for your environment and organization.
 
-_The following variables can be customized to manage the service's **systemd** service unit definition and execution profile/policy:_
+_The following variables can be customized to manage the services' **systemd** [Service] unit definition and execution profile/policy:_
 
 `extra_run_args: <lotus-cli-options>` (**default**: `[]`)
-- list of `lotus daemon` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus daemon`'s cli, this variable enables the launch to be customized according to the user's specification.
+- list of `lotus daemon` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus daemon`'s [cli](https://gist.github.com/0x0I/53533099efcee8c87a49301e79358a0a), this variable enables the launch to be customized according to the user's specification.
+
+`extra_miner_args: <lotus-storage-miner-cli-options>` (**default**: `[]`)
+- list of `lotus-storage-miner run` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus-storage-miner run`'s [cli](https://gist.github.com/0x0I/71b7a7c25a7f558d4fd9f0ff39a896d6), this variable enables the launch to be customized according to the user's specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
-- hash of settings used to customize the `[Service]` unit configuration and execution environment of the Lotus **systemd** service.
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Lotus* **systemd** service.
+
+`custom_miner_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Lotus Storage Miner* **systemd** service.
+
+##### Example
 
 ```yaml
 custom_unit_properties:
-  WorkingDirectory: /path/to/client/dir
+  Environment: "LOTUS_PATH=/var/run/lotus"
+custom_miner_properties:
+  Environment: "LOTUS_STORAGE_PATH=/var/run/lotus-storage-miner"
 ```
 
 Reference the [systemd.service](http://man7.org/linux/man-pages/man5/systemd.service.5.html) *man* page for a configuration overview and reference.
@@ -144,7 +163,37 @@ install `lotus` from specified *git* source version:
     vars:
       install_type: source
       git_url: https://github.com/filecoin-project/lotus.git
-      git_version: v0.1.1 
+      git_version: v0.1.1
+```
+
+expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
+```
+- hosts: fedora-agents
+  roles:
+  - role: 0xOI.lotus
+    vars:
+      install_type: archive
+      config:
+        API:
+          ListenAddress: /ip4/127.0.0.1/tcp/1234/http
+        LibP2P:
+          ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
+```
+
+launch `lotus` service and `lotus-storage-miner` agents with custom runtime/storage paths and launch options:
+```
+- hosts: all
+  roles:
+  - role: 0xOI.lotus
+    vars:
+      install_type: source
+      lotus_path: /mnt/lotus
+      lotus_storage_path: /mnt/lotus/miner
+      config:
+        Metrics:
+          Nickname: "my-miner"
+      extra_run_args: ['--bootstrap']
+      extra_miner_args: ['--nosync']
 ```
 
 License
