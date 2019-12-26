@@ -75,7 +75,7 @@ _The following variables can be customized to control various aspects of this in
 - path on target host the `lotus` service should establish as its runtime configuration and data directory.
 
 `lotus_storage_path: </path/to/miner/data-dir>` (**default**: `/opt/lotus/.lotusstorage`)
-- path on target host the `lotus` service should establish as its runtime configuration and data directory.
+- path on target host the `lotus-storage-miner` service should establish as its runtime and data storage directory.
 
 `go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
@@ -194,6 +194,8 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
           Nickname: "my-miner"
       extra_run_args: ['--bootstrap']
       extra_miner_args: ['--nosync']
+      custom_miner_properties:
+         LimitDATA: 1T
 ```
 
 License
