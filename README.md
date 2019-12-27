@@ -63,7 +63,7 @@ _The following variables can be customized to control various aspects of this in
 - address of a checksum file for verifying the data integrity of the specified archive. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value. *ONLY* relevant when `install_type` is set to **archive**.
 
 `checksum_format: <string>` (**default**: see `sha512`)
-- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes.
+- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes. *ONLY* relevant when `install_type` is set to **archive**
 
 `git_url: <path-or-url-to-git-repo>` (**default**: see `defaults/main.yml`)
 - address of `lotus` git repository. Address can reference the Github site address or custom source hosted on an alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
