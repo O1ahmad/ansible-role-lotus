@@ -1,3 +1,5 @@
+<p><img src="https://cryptologos.cc/logos/filecoin-fil-logo.png" alt="lotus logo" title="lotus" align="right" height="60" /></p>
+
 Ansible Role :cherry_blossom: :link: Lotus
 =========
 [![Galaxy Role](https://img.shields.io/ansible/role/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
