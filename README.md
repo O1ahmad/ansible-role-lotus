@@ -110,7 +110,7 @@ _The following variables can be customized to manage the content of this TOML co
     # TOML Section '[API]'
     API:
       # Section setting ListenAddress with value of localhost binding at port 1234
-      ListenAddress = "/ip4/127.0.0.1/tcp/1234/http"
+      ListenAddress: "/ip4/127.0.0.1/tcp/1234/http"
   ```
 
 #### Launch
