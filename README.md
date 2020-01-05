@@ -18,7 +18,7 @@ Ansible Role :cherry_blossom: :link: Lotus
   - [License](#license)
   - [Author Information](#author-information)
 
-Ansible role that installs and configures Lotus, a Go-implementation of the Filecoin distributed storage network blockchian protocol.
+Ansible role that installs and configures Lotus: a Go-implementation of the Filecoin distributed storage network blockchain protocol.
 
 ##### Supported Platforms:
 ```
