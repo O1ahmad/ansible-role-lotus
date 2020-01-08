@@ -46,7 +46,7 @@ Variables are available and organized according to the following software & mach
 _The following variables can be customized to control various aspects of this installation process, ranging from software version and source location of binaries to the installation directory where they are stored:_
 
 `lotus_user: <service-user-name>` (**default**: *lotus*)
-- dedicated service user, group and directory used by `lotus` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
+- dedicated service user and group used by `lotus` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
 
 `install_type: <archive | source>` (**default**: archive)
 - **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the `glibc` *GNU libc libraries* package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
@@ -166,6 +166,7 @@ install `lotus` from specified *git* source version:
       install_type: source
       git_url: https://github.com/filecoin-project/lotus.git
       git_version: v0.1.1
+<<<<<<< Updated upstream
 ```
 
 expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
@@ -198,6 +199,8 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
       extra_miner_args: ['--nosync']
       custom_miner_properties:
          LimitDATA: 1T
+=======
+>>>>>>> Stashed changes
 ```
 
 License
