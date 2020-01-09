@@ -1,0 +1,64 @@
+---
+- name: Update system packages
+  become: true
+  yum:
+    name: "*"
+    state: latest
+  when: ansible_os_family == "Redhat"
+
+- name: Add Go-lang backports repository to sources list
+  become: true
+  apt_repository:
+    repo: ppa:longsleep/golang-backports
+  when: ansible_distribution == "Ubuntu"
+
+- name: Update apt packages
+  become: true
+  apt:
+    upgrade: 'yes'
+    update_cache: 'yes'
+  when: ansible_os_family == "Debian"
+
+- name: Download and extract Go-lang
+  become: true
+  unarchive:
+    src: "{{ go_url }}"
+    dest: "{{ go_install_dir }}"
+    mode: '0775'
+    remote_src: 'yes'
+  when: ansible_distribution != "Ubuntu"
+
+- name: Create a symbolic link to /usr/local/bin/go
+  become: true
+  file:
+    src: "{{ go_install_dir }}/go/bin/go"
+    dest: /usr/local/bin/go
+    state: link
+  when: ansible_distribution != "Ubuntu"
+
+- name: update system dependencies
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_dependencies }}"
+
+- name: Set lotus service unit [Service] configuration
+  set_fact:
+    default_service_unit:
+      ExecStart: "/usr/local/bin/lotus daemon {{ extra_run_args|join(' ') }}"
+      User: "{{ lotus_user }}"
+      Group: "{{ lotus_user }}"
+      StandardOutput: journal
+      StandardError: inherit
+      Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
+
+- name: Set lotus miner unit [Service] configuration
+  set_fact:
+    default_miner_unit:
+      ExecStart: "/usr/local/bin/lotus-storage-miner run {{ extra_miner_args|join(' ') }}"
+      User: "{{ lotus_user }}"
+      Group: "{{ lotus_user }}"
+      StandardOutput: journal
+      StandardError: inherit
+      Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
