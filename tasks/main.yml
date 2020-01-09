@@ -15,6 +15,9 @@
         - "{{ ansible_os_family|lower }}/install.yml"
       skip: true
 
+- name: Include common preflight tasks
+  include_tasks: "common/preflight.yml"
+
 - name: Include common installation tasks
   include_tasks: "common/install.yml"
 

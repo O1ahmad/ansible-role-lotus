@@ -88,37 +88,37 @@ platforms:
         - systemctl enable ssh.service
 
 suites:
-  - name: archive_install
+  - name: install_archive
     provisioner:
-      playbook: test/integration/install/archive_install/default_playbook.yml
+      playbook: test/integration/install/install_archive/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/install/archive_install
+        - path: test/integration/install/install_archive
     excludes:
       - centos-7
       - debian-8
       - debian-9
-  - name: source_install
+  - name: install_source
     provisioner:
-      playbook: test/integration/install/source_install/default_playbook.yml
+      playbook: test/integration/install/install_source/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/install/source_install
+        - path: test/integration/install/install_source
   - name: config_toml
     provisioner:
       playbook: test/integration/config/config_toml/default_playbook.yml
     verifier:
       inspec_tests:
         - path: test/integration/config/config_toml
-  - name: service_launch
+  - name: launch_service
     provisioner:
-      playbook: test/integration/launch/service_launch/default_playbook.yml
+      playbook: test/integration/launch/launch_service/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/launch/service_launch
-  - name: miner_launch
+        - path: test/integration/launch/launch_service
+  - name: launch_miner
     provisioner:
-      playbook: test/integration/launch/miner_launch/default_playbook.yml
+      playbook: test/integration/launch/launch_miner/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/launch/miner_launch
+        - path: test/integration/launch/launch_miner
