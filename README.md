@@ -166,7 +166,6 @@ install `lotus` from specified *git* source version:
       install_type: source
       git_url: https://github.com/filecoin-project/lotus.git
       git_version: v0.1.1
-<<<<<<< Updated upstream
 ```
 
 expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
@@ -178,7 +177,7 @@ expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
       install_type: archive
       config:
         API:
-          ListenAddress: /ip4/127.0.0.1/tcp/1234/http
+          ListenAddress: /ip4/0.0.0.0/tcp/1234/http
         LibP2P:
           ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
 ```
@@ -198,9 +197,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
       extra_run_args: ['--bootstrap']
       extra_miner_args: ['--nosync']
       custom_miner_properties:
-         LimitDATA: 1T
-=======
->>>>>>> Stashed changes
+        LimitDATA: 1T
 ```
 
 License
