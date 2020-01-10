@@ -4,20 +4,20 @@
   yum:
     name: "*"
     state: latest
-  when: ansible_os_family == "Redhat"
+  when: ansible_os_family|lower == "redhat"
 
 - name: Add Go-lang backports repository to sources list
   become: true
   apt_repository:
     repo: ppa:longsleep/golang-backports
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution|lower == "ubuntu"
 
 - name: Update apt packages
   become: true
   apt:
     upgrade: 'yes'
     update_cache: 'yes'
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family|lower == "debian"
 
 - name: Download and extract Go-lang
   become: true
@@ -26,26 +26,26 @@
     dest: "{{ go_install_dir }}"
     mode: '0775'
     remote_src: 'yes'
-  when: ansible_distribution != "Ubuntu"
+  when: ansible_distribution|lower != "ubuntu"
 
-- name: Create a symbolic link to /usr/local/bin/go
-  become: true
-  file:
-    src: "{{ go_install_dir }}/go/bin/go"
-    dest: /usr/local/bin/go
-    state: link
-  when: ansible_distribution != "Ubuntu"
-
-- name: update system dependencies
+- name: Update system dependencies
   become: true
   package:
     name: "{{ item }}"
     state: present
   loop: "{{ system_dependencies }}"
 
+- name: Create a symbolic link to /usr/local/bin/go
+  become: true
+  file:
+    src: "{{ go_install_dir }}/go"
+    dest: /usr/local/bin/go
+    state: link
+  when: ansible_distribution|lower != "Ubuntu"
+
 - name: Set lotus service unit [Service] configuration
   set_fact:
-    default_service_unit:
+    _default_service_unit:
       ExecStart: "/usr/local/bin/lotus daemon {{ extra_run_args|join(' ') }}"
       User: "{{ lotus_user }}"
       Group: "{{ lotus_user }}"
@@ -55,7 +55,7 @@
 
 - name: Set lotus miner unit [Service] configuration
   set_fact:
-    default_miner_unit:
+    _default_miner_unit:
       ExecStart: "/usr/local/bin/lotus-storage-miner run {{ extra_miner_args|join(' ') }}"
       User: "{{ lotus_user }}"
       Group: "{{ lotus_user }}"

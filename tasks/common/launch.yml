@@ -1,4 +1,4 @@
 ---
-- name: perform designated service launch procedures
+- name: Install Lotus services
   include_tasks: "common/launch/{{ item }}_launch.yml"
   loop: "{{ managed_services }}"

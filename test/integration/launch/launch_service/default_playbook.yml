@@ -6,5 +6,6 @@
   vars:
     version: v0.1.5
     managed_services: ['service']
+    install_type: archive
     extra_run_args:
       - '--bootstrap'
