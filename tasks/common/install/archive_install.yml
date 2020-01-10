@@ -11,7 +11,7 @@
   become: true
   when: install_type == "archive"
 
-- name: Extract Locust archive
+- name: Extract Lotus archive
   unarchive:
     src: "{{ archive_tmp.dest }}"
     dest: "{{ install_dir }}"

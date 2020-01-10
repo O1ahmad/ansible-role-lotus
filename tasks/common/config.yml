@@ -7,11 +7,11 @@
     group: "{{ lotus_user }}"
     state: directory
 
-- name: Copy Lotus configuration in place
+- name: Render Lotus configuration
   become: true
   template:
-    src: "{{ lotus_config_file }}.j2"
-    dest: "{{ lotus_path }}/{{ lotus_config_file }}"
+    src: "{{ _lotus_config_file }}.j2"
+    dest: "{{ lotus_path }}/{{ _lotus_config_file }}"
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     mode: 0644

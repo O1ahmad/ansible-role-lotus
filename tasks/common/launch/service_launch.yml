@@ -10,7 +10,7 @@
           Documentation: https://docs.lotu.sh/
           Wants: network-online.target
           After: network-online.target
-        Service: "{{ default_service_unit | combine(custom_unit_properties) }}"
+        Service: "{{ _default_service_unit | combine(custom_unit_properties) }}"
         Install:
           WantedBy: multi-user.target
 
