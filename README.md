@@ -68,7 +68,7 @@ _The following variables can be customized to control various aspects of this in
 - hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes. *ONLY* relevant when `install_type` is set to **archive**
 
 `git_url: <path-or-url-to-git-repo>` (**default**: see `defaults/main.yml`)
-- address of `lotus` git repository. Address can reference the Github site address or custom source hosted on an alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
+- address of `lotus` git repository. Address can reference the [Github](https://github.com/filecoin-project/lotus) site address or custom source hosted on an alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
 
 `version: <string>` (**default**: `v0.1.0`)
 - version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name. *ONLY* relevant when `install_type` is set to **source**.
