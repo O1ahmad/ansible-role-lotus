@@ -1,14 +1,4 @@
 ---
-#######  Source installation #######
-
-- name: Create installation directory
-  become: true
-  file:
-    path: "{{ install_dir }}"
-    state: directory
-    owner: "{{ lotus_user }}"
-    group: "{{ lotus_user }}"
-
 - name: Clone lotus git repository
   become: true
   git:
@@ -16,6 +6,9 @@
     dest: "{{ install_dir }}"
     version: "{{ git_version }}"
   when: install_type == "source"
+  tags:
+    - install
+    - source
 
 - name: Make clean source
   become: true
@@ -25,6 +18,9 @@
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
   when: install_type == "source"
+  tags:
+    - install
+    - source
 
 - name: Build source package
   become: true
@@ -34,6 +30,9 @@
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
   when: install_type == "source"
+  tags:
+    - install
+    - source
 
 - name: Install lotus client and miner software
   become: true
@@ -43,3 +42,18 @@
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
   when: install_type == "source"
+  tags:
+    - install
+    - source
+
+- name: Ensure proper permissions of install directory post build
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ lotus_user }}"
+    group: "{{ lotus_user }}"
+    recurse: true
+  tags:
+    - install
+    - source

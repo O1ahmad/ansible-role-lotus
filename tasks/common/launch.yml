@@ -1,4 +1,6 @@
 ---
-- name: Install Lotus services
+- name: Launch Lotus services
   include_tasks: "common/launch/{{ item }}_launch.yml"
   loop: "{{ managed_services }}"
+  tags:
+    - launch

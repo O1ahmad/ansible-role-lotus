@@ -4,8 +4,8 @@
   roles:
     - ansible-role-lotus
   vars:
-    version: v0.1.5
+    install_type: source
+    git_version: v0.1.5
     managed_services: ['service']
-    install_type: archive
     extra_run_args:
-      - '--bootstrap'
+      - "--bootstrap"

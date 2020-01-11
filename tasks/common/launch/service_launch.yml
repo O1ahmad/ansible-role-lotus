@@ -13,9 +13,13 @@
         Service: "{{ _default_service_unit | combine(custom_unit_properties) }}"
         Install:
           WantedBy: multi-user.target
+  tags:
+    - launch
 
 - name: Ensure start of lotus daemon service
   service:
     name: lotus
     state: started
     enabled: "yes"
+  tags:
+    - launch

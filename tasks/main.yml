@@ -6,6 +6,8 @@
         - "{{ ansible_distribution|lower }}.yml"
         - "{{ ansible_os_family|lower }}.yml"
       skip: true
+  tags:
+    - always
 
 - name: Include OS and distribution specific installation tasks.
   include_tasks: "{{ item }}"
@@ -14,15 +16,25 @@
         - "{{ ansible_distribution|lower }}/install.yml"
         - "{{ ansible_os_family|lower }}/install.yml"
       skip: true
+  tags:
+    - install
 
 - name: Include common preflight tasks
   include_tasks: "common/preflight.yml"
+  tags:
+    - preflight
 
 - name: Include common installation tasks
   include_tasks: "common/install.yml"
+  tags:
+    - install
 
 - name: Include common configuration tasks
   include_tasks: "common/config.yml"
+  tags:
+    - config
 
 - name: Include common launch tasks
   include_tasks: "common/launch.yml"
+  tags:
+    - launch
