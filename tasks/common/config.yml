@@ -6,6 +6,8 @@
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     state: directory
+  tags:
+    - config
 
 - name: Render Lotus configuration
   become: true
@@ -17,7 +19,9 @@
     mode: 0644
   vars:
     conf: "{{ config }}"
-  when: config is defined and config is not none
+  when: config is defined and config.keys()|length > 0
+  tags:
+    - config
 
 - name: Ensure existence of Lotus storage path
   become: true
@@ -26,3 +30,5 @@
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     state: directory
+  tags:
+    - config

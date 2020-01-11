@@ -5,12 +5,16 @@
     name: "*"
     state: latest
   when: ansible_os_family|lower == "redhat"
+  tags:
+    - preflight
 
 - name: Add Go-lang backports repository to sources list
   become: true
   apt_repository:
     repo: ppa:longsleep/golang-backports
   when: ansible_distribution|lower == "ubuntu"
+  tags:
+    - preflight
 
 - name: Update apt packages
   become: true
@@ -18,6 +22,8 @@
     upgrade: 'yes'
     update_cache: 'yes'
   when: ansible_os_family|lower == "debian"
+  tags:
+    - preflight
 
 - name: Download and extract Go-lang
   become: true
@@ -27,6 +33,8 @@
     mode: '0775'
     remote_src: 'yes'
   when: ansible_distribution|lower != "ubuntu"
+  tags:
+    - preflight
 
 - name: Update system dependencies
   become: true
@@ -34,6 +42,8 @@
     name: "{{ item }}"
     state: present
   loop: "{{ system_dependencies }}"
+  tags:
+    - preflight
 
 - name: Create a symbolic link to /usr/local/bin/go
   become: true
@@ -42,6 +52,8 @@
     dest: /usr/local/bin/go
     state: link
   when: ansible_distribution|lower != "Ubuntu"
+  tags:
+    - preflight
 
 - name: Set lotus service unit [Service] configuration
   set_fact:
@@ -52,6 +64,8 @@
       StandardOutput: journal
       StandardError: inherit
       Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
+  tags:
+    - preflight
 
 - name: Set lotus miner unit [Service] configuration
   set_fact:
@@ -62,3 +76,5 @@
       StandardOutput: journal
       StandardError: inherit
       Environment: "LOTUS_PATH={{ lotus_path }} LOTUS_STORAGE_PATH={{ lotus_storage_path }}"
+  tags:
+    - preflight

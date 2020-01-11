@@ -13,9 +13,15 @@
         Service: "{{ _default_miner_unit | combine(custom_miner_properties) }}"
         Install:
           WantedBy: multi-user.target
+  tags:
+    - launch
+    - miner
 
 - name: Ensure start of lotus miner service
   service:
     name: lotus-storage-miner
     state: started
     enabled: "yes"
+  tags:
+    - launch
+    - miner

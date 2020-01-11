@@ -5,6 +5,8 @@
     name: "{{ lotus_user }}"
     state: present
     system: true
+  tags:
+    - install
 
 - name: Create Lotus user
   become: true
@@ -15,6 +17,8 @@
     shell: "/sbin/nologin"
     system: true
     create_home: false
+  tags:
+    - install
 
 - name: Ensure existence of install dir
   become: true
@@ -23,6 +27,10 @@
     owner: "{{ lotus_user }}"
     group: "{{ lotus_user }}"
     state: directory
+  tags:
+    - install
 
 - name: perform designated installation procedure
   include_tasks: "common/install/{{ install_type }}_install.yml"
+  tags:
+    - install
