@@ -25,6 +25,8 @@
     remote_src: true
   become: true
   when: install_type == "archive"
+  notify:
+    - Restart service
   tags:
     - install
     - archive
@@ -36,6 +38,8 @@
     dest: /usr/local/bin/lotus
     state: link
   when: install_type == "archive"
+  notify:
+    - Restart service
   tags:
     - install
     - archive
