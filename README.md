@@ -13,6 +13,7 @@ Ansible Role :cherry_blossom: :link: Lotus
       - [Install](#install)
       - [Config](#config)
       - [Launch](#launch)
+      - [Uninstall](#uninstall)
   - [Dependencies](#dependencies)
   - [Example Playbook](#example-playbook)
   - [License](#license)
@@ -38,6 +39,7 @@ Variables are available and organized according to the following software & mach
 * _install_
 * _config_
 * _launch_
+* _uninstall_
 
 #### Install
 
@@ -142,6 +144,14 @@ custom_miner_properties:
 
 Reference the [systemd.service](http://man7.org/linux/man-pages/man5/systemd.service.5.html) *man* page for a configuration overview and reference.
 
+#### Uninstall
+
+Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and roles and perhaps providing more graceful/managed transitions between tooling upgrades.
+
+_The following variable(s) can be customized to manage this uninstall process:_
+
+`perform_uninstall: <true | false>` (**default**: `false`)
+- whether to uninstall and remove all artifacts and remnants of this `lotus` installation on a target host (**see**: `handlers/main.yml` for details)
 
 Dependencies
 ------------

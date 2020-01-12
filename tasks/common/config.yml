@@ -20,6 +20,8 @@
   vars:
     conf: "{{ config }}"
   when: config is defined and config.keys()|length > 0
+  notify:
+    - Restart service
   tags:
     - config
 

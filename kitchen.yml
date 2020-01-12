@@ -138,3 +138,13 @@ suites:
       - centos-7
       - debian-8
       - debian-9
+  - name: uninstall
+    provisioner:
+      playbook: test/integration/uninstall/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/uninstall
+    excludes:
+      - centos-7
+      - debian-8
+      - debian-9
