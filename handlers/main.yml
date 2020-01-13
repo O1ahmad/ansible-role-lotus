@@ -7,6 +7,21 @@
   listen: Restart service
   when: not perform_uninstall
 
+- name: Stop lotus systemd service
+  service:
+    name: lotus
+    state: stopped
+    enabled: false
+  listen: Uninstall Lotus
+
+- name: Remove Lotus systemd service file
+  become: true
+  file:
+    path: "/etc/systemd/system/lotus.service"
+    state: absent
+  listen: Uninstall Lotus
+  when: ansible_os_family|lower != 'darwin'
+
 - name: Remove lotus install dir
   become: true
   file:
@@ -27,21 +42,6 @@
     state: absent
   become: true
   listen: Uninstall Lotus
-
-- name: Stop lotus systemd service
-  service:
-    name: lotus
-    state: stopped
-    enabled: false
-  listen: Uninstall Lotus
-
-- name: Remove Lotus systemd service file
-  become: true
-  file:
-    path: "/etc/systemd/system/lotus.service"
-    state: absent
-  listen: Uninstall Lotus
-  when: ansible_os_family|lower != 'darwin'
 
 - name: Remove lotus user
   user:

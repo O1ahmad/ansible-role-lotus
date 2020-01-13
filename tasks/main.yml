@@ -1,22 +1,8 @@
 ---
-- name: Check for uninstall signal
-  command: /bin/true
-  notify: Uninstall Lotus
-  when: perform_uninstall
-
-- name: End play following uninstallation
-  meta: end_play
-  when: perform_uninstall
-
-- name: Include OS and distribution specific variables.
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution|lower }}.yml"
-        - "{{ ansible_os_family|lower }}.yml"
-      skip: true
+- name: Include common preflight tasks
+  include_tasks: "common/preflight.yml"
   tags:
-    - always
+    - preflight
 
 - name: Include OS and distribution specific installation tasks.
   include_tasks: "{{ item }}"
@@ -27,11 +13,6 @@
       skip: true
   tags:
     - install
-
-- name: Include common preflight tasks
-  include_tasks: "common/preflight.yml"
-  tags:
-    - preflight
 
 - name: Include common installation tasks
   include_tasks: "common/install.yml"
