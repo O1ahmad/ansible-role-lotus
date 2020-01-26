@@ -4,7 +4,6 @@
   roles:
     - role: ansible-role-lotus
       vars:
-        lotus_user: test
         perform_uninstall: false
     - role: ansible-role-lotus
       vars:

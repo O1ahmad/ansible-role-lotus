@@ -1,15 +1,4 @@
 ---
-- name: Check for uninstall signal
-  block:
-    - name: Broadcast uninstall signal
-      command: /bin/true
-      notify: Uninstall Lotus
-      when: perform_uninstall
-
-    - name: End play following uninstallation
-      meta: end_play
-  when: perform_uninstall
-
 - name: Include OS and distribution specific variables.
   include_vars: "{{ item }}"
   with_first_found:
@@ -20,45 +9,59 @@
   tags:
     - always
 
+- name: Check for uninstall signal
+  when: perform_uninstall
+  block:
+    - name: Broadcast uninstall signal
+      command: /bin/true
+      notify: Uninstall Lotus
+      when: perform_uninstall
+
+    - name: End play following uninstallation
+      meta: end_play
+  tags:
+    - always
+
 - name: Update system packages
   become: true
+  when: go_autoinstall and ansible_os_family|lower == "redhat"
   yum:
     name: "*"
     state: latest
-  when: ansible_os_family|lower == "redhat"
   tags:
     - preflight
 
 - name: Add Go-lang backports repository to sources list
   become: true
+  when: go_autoinstall and ansible_distribution|lower == "ubuntu"
   apt_repository:
     repo: ppa:longsleep/golang-backports
-  when: ansible_distribution|lower == "ubuntu"
   tags:
     - preflight
 
 - name: Update apt packages
   become: true
+  when: go_autoinstall and ansible_os_family|lower == "debian"
   apt:
     upgrade: 'yes'
     update_cache: 'yes'
-  when: ansible_os_family|lower == "debian"
   tags:
     - preflight
 
 - name: Download and extract Go-lang
   become: true
+  when: go_autoinstall and ansible_distribution|lower != "ubuntu"
   unarchive:
     src: "{{ go_url }}"
     dest: "{{ go_install_dir }}"
     mode: '0775'
     remote_src: 'yes'
-  when: ansible_distribution|lower != "ubuntu"
   tags:
     - preflight
 
 - name: Update system dependencies
   become: true
+  when: go_autoinstall and ansible_distribution|lower != "ubuntu"
   package:
     name: "{{ item }}"
     state: present
@@ -68,11 +71,11 @@
 
 - name: Create a symbolic link to /usr/local/bin/go
   become: true
+  when: go_autoinstall and ansible_distribution|lower != "Ubuntu"
   file:
     src: "{{ go_install_dir }}/go"
     dest: /usr/local/bin/go
     state: link
-  when: ansible_distribution|lower != "Ubuntu"
   tags:
     - preflight
 
