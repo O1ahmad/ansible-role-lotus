@@ -81,6 +81,9 @@ _The following variables can be customized to control various aspects of this in
 `lotus_storage_path: </path/to/miner/data-dir>` (**default**: `/opt/lotus/.lotusstorage`)
 - path on target host the `lotus-storage-miner` service should establish as its runtime and data storage directory.
 
+`go_autoinstall: <true|false>` (**default**: `false`)
+- automatically install the specified version of Go packages and binaries. Useful when installing from source which requires `go` as a part of its build process
+
 `go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
 
