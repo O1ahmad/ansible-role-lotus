@@ -6,3 +6,4 @@
   vars:
     install_type: source
     git_version: v0.1.5
+    go_autoinstall: true

@@ -3,20 +3,21 @@ system_dependencies: []
 
 lotus_user: lotus
 
-install_type: source
+install_type: archive
 install_dir: /opt/lotus
 
 lotus_path: "{{ install_dir }}/.lotus"
 
+go_autoinstall: false
 go_url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
 go_install_dir: /usr/local
 
-archive_url: https://github.com/filecoin-project/lotus/releases/download/v0.1.0/lotus_v0.1.0_linux-amd64.tar.gz
-archive_checksum: https://github.com/filecoin-project/lotus/releases/download/v0.1.0/lotus_v0.1.0_linux-amd64.tar.gz.sha512
+archive_url: https://github.com/filecoin-project/lotus/releases/download/v0.2.6/lotus_v0.2.6_linux-amd64.tar.gz
+archive_checksum: https://github.com/filecoin-project/lotus/releases/download/v0.2.6/lotus_v0.2.6_linux-amd64.tar.gz.sha512
 checksum_format: sha512
 
 git_url: https://github.com/filecoin-project/lotus.git
-git_version: v0.1.5
+git_version: v0.2.6
 
 _lotus_config_file: config.toml
 config: {}

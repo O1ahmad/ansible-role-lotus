@@ -5,9 +5,9 @@
     name: lotus
     state: restarted
   listen: Restart service
-  when: not perform_uninstall
 
 - name: Stop lotus systemd service
+  become: true
   service:
     name: lotus
     state: stopped
@@ -20,7 +20,21 @@
     path: "/etc/systemd/system/lotus.service"
     state: absent
   listen: Uninstall Lotus
-  when: ansible_os_family|lower != 'darwin'
+
+- name: Stop lotus storage miner systemd service
+  become: true
+  service:
+    name: lotus-storage-miner
+    state: stopped
+    enabled: false
+  listen: Uninstall Lotus
+
+- name: Remove Lotus storage miner systemd service file
+  become: true
+  file:
+    path: "/etc/systemd/system/lotus-storage-miner.service"
+    state: absent
+  listen: Uninstall Lotus
 
 - name: Remove lotus install dir
   become: true
@@ -30,20 +44,21 @@
   listen: Uninstall Lotus
 
 - name: Remove lotus path dir
+  become: true
   file:
     path: "{{ lotus_path }}"
     state: absent
-  become: true
   listen: Uninstall Lotus
 
 - name: Remove lotus storage path dir
+  become: true
   file:
     path: "{{ lotus_storage_path }}"
     state: absent
-  become: true
   listen: Uninstall Lotus
 
 - name: Remove lotus user
+  become: true
   user:
     name: "{{ lotus_user }}"
     state: absent
@@ -51,6 +66,7 @@
   listen: Uninstall Lotus
 
 - name: Remove lotus group
+  become: true
   group:
     name: "{{ lotus_user }}"
     state: absent

@@ -17,6 +17,7 @@
     - launch
 
 - name: Ensure start of lotus daemon service
+  become: true
   service:
     name: lotus
     state: started

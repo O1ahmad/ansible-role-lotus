@@ -1,47 +1,47 @@
 ---
 - name: Clone lotus git repository
   become: true
+  when: install_type == "source"
   git:
     repo: "{{ git_url }}"
     dest: "{{ install_dir }}"
     version: "{{ git_version }}"
-  when: install_type == "source"
   tags:
     - install
     - source
 
 - name: Make clean source
   become: true
+  when: install_type == "source"
   make:
     chdir: "{{ install_dir }}"
     target: clean
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
-  when: install_type == "source"
   tags:
     - install
     - source
 
 - name: Build source package
   become: true
+  when: install_type == "source"
   make:
     chdir: "{{ install_dir }}"
     target: all
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
-  when: install_type == "source"
   tags:
     - install
     - source
 
 - name: Install lotus client and miner software
   become: true
+  when: install_type == "source"
   make:
     chdir: "{{ install_dir }}"
     target: install
   environment:
     PATH: /usr/local/bin:{{ ansible_env.PATH }}
-  when: install_type == "source"
   tags:
     - install
     - source

@@ -18,6 +18,7 @@
     - miner
 
 - name: Ensure start of lotus miner service
+  become: true
   service:
     name: lotus-storage-miner
     state: started
