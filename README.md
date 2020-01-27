@@ -5,6 +5,7 @@ Ansible Role :cherry_blossom: :link: Lotus
 [![Galaxy Role](https://img.shields.io/ansible/role/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
 [![Downloads](https://img.shields.io/ansible/role/d/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
 [![Build Status](https://travis-ci.org/0x0I/ansible-role-lotus.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-lotus)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
   - [Supported Platforms](#supported-platforms)
@@ -216,7 +217,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
 License
 -------
 
-Apache, BSD, MIT
+MIT
 
 Author Information
 ------------------
