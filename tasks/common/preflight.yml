@@ -61,11 +61,10 @@
 
 - name: Update system dependencies
   become: true
-  when: go_autoinstall and ansible_distribution|lower != "ubuntu"
+  when: ansible_distribution|lower != "ubuntu"
   package:
-    name: "{{ item }}"
+    name: "{{ system_dependencies }}"
     state: present
-  loop: "{{ system_dependencies }}"
   tags:
     - preflight
 
