@@ -1,9 +1,9 @@
 ---
-- name: Default playbook for testing
+- name: Lotus source installation integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-lotus
-  vars:
-    install_type: source
-    git_version: v0.1.5
-    go_autoinstall: true
+    - role: ansible-role-lotus
+      vars:
+        install_type: source
+        git_version: v0.1.5
+        go_autoinstall: true

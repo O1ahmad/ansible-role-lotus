@@ -1,4 +1,4 @@
-title "Lotus git installation test suite"
+title "Lotus source installation integration tests"
 
 describe file('/opt/lotus') do
   it { should exist }

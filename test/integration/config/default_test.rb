@@ -1,4 +1,4 @@
-title "Lotus config.toml configuration test suite"
+title "Lotus configuration integration tests"
 
 describe file('/home/lotus/.lotus/config.toml') do
   it { should exist }
