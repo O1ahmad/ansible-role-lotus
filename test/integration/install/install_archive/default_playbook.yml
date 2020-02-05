@@ -1,7 +1,7 @@
 ---
-- name: Default playbook for testing
+- name: Lotus archive installation integration test playbook
   hosts: test-kitchen
   roles:
-    - ansible-role-lotus
-  vars:
-    install_type: archive
+    - role: ansible-role-lotus
+      vars:
+        install_type: archive

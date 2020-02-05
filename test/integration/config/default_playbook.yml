@@ -1,0 +1,16 @@
+---
+- name: Lotus configuration integration test playbook
+  hosts: test-kitchen
+  roles:
+    - role: ansible-role-lotus
+      vars:
+        config:
+          API:
+            ListenAddress: "/ip4/0.0.0.0/tcp/1234/http"
+            Timeout: "30s"
+          Libp2p:
+            ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
+          Metrics:
+            Nickname: "test-example"
+            HeadNotifs: true
+            PubsubTracing: true

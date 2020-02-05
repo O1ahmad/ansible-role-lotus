@@ -1,5 +1,4 @@
 ---
-# kitchen configuration for CI testing
 driver:
   name: docker
 
@@ -107,12 +106,12 @@ suites:
       - centos-7
       - debian-8
       - debian-9
-  - name: config_toml
+  - name: config
     provisioner:
-      playbook: test/integration/config/config_toml/default_playbook.yml
+      playbook: test/integration/config/default_playbook.yml
     verifier:
       inspec_tests:
-        - path: test/integration/config/config_toml
+        - path: test/integration/config
     excludes:
       - centos-7
       - debian-8
