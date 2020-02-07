@@ -5,6 +5,7 @@
     name: lotus
     state: restarted
   listen: Restart service
+  ignore_errors: true
 
 - name: Stop lotus systemd service
   become: true
@@ -12,14 +13,14 @@
     name: lotus
     state: stopped
     enabled: false
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove Lotus systemd service file
   become: true
   file:
     path: "/etc/systemd/system/lotus.service"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Stop lotus storage miner systemd service
   become: true
@@ -27,35 +28,35 @@
     name: lotus-storage-miner
     state: stopped
     enabled: false
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove Lotus storage miner systemd service file
   become: true
   file:
     path: "/etc/systemd/system/lotus-storage-miner.service"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove lotus install dir
   become: true
   file:
     path: "{{ install_dir }}"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove lotus path dir
   become: true
   file:
     path: "{{ lotus_path }}"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove lotus storage path dir
   become: true
   file:
     path: "{{ lotus_storage_path }}"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove lotus user
   become: true
@@ -63,11 +64,11 @@
     name: "{{ lotus_user }}"
     state: absent
     remove: true
-  listen: Uninstall Lotus
+  listen: Uninstall service
 
 - name: Remove lotus group
   become: true
   group:
     name: "{{ lotus_user }}"
     state: absent
-  listen: Uninstall Lotus
+  listen: Uninstall service

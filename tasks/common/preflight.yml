@@ -14,43 +14,20 @@
   block:
     - name: Broadcast uninstall signal
       command: /bin/true
-      notify: Uninstall Lotus
-      when: perform_uninstall
-
+      notify:
+        - Uninstall service
+  rescue:
+    - name: Ensure flush of handlers
+      meta: flush_handlers
+  always:
     - name: End play following uninstallation
       meta: end_play
-  tags:
-    - always
-
-- name: Update system packages
-  become: true
-  when: go_autoinstall and ansible_os_family|lower == "redhat"
-  yum:
-    name: "*"
-    state: latest
-  tags:
-    - preflight
-
-- name: Add Go-lang backports repository to sources list
-  become: true
-  when: go_autoinstall and ansible_distribution|lower == "ubuntu"
-  apt_repository:
-    repo: ppa:longsleep/golang-backports
-  tags:
-    - preflight
-
-- name: Update apt packages
-  become: true
-  when: go_autoinstall and ansible_os_family|lower == "debian"
-  apt:
-    upgrade: 'yes'
-    update_cache: 'yes'
   tags:
     - preflight
 
 - name: Download and extract Go-lang
   become: true
-  when: go_autoinstall and ansible_distribution|lower != "ubuntu"
+  when: go_autoinstall
   unarchive:
     src: "{{ go_url }}"
     dest: "{{ go_install_dir }}"
@@ -61,18 +38,17 @@
 
 - name: Update system dependencies
   become: true
-  when: ansible_distribution|lower != "ubuntu"
   package:
     name: "{{ system_dependencies }}"
     state: present
   tags:
     - preflight
 
-- name: Create a symbolic link to /usr/local/bin/go
+- name: Create a symbolic link to installed go binary
   become: true
-  when: go_autoinstall and ansible_distribution|lower != "Ubuntu"
+  when: go_autoinstall
   file:
-    src: "{{ go_install_dir }}/go"
+    src: "{{ go_install_dir }}/go/bin/go"
     dest: /usr/local/bin/go
     state: link
   tags:

@@ -32,4 +32,4 @@ perform_uninstall: false
 custom_unit_properties: {}
 custom_miner_properties: {}
 
-managed_services: ['service', 'miner']
+managed_services: ['lotus']

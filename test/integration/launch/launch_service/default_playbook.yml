@@ -5,7 +5,8 @@
     - ansible-role-lotus
   vars:
     install_type: source
+    go_autoinstall: true
     git_version: v0.1.5
-    managed_services: ['service']
+    managed_services: ['lotus']
     extra_run_args:
       - "--bootstrap"

@@ -34,3 +34,16 @@
   include_tasks: "common/install/{{ install_type }}_install.yml"
   tags:
     - install
+
+- name: Create symbolic links to managed services binaries
+  become: true
+  when: install_type == "archive"
+  file:
+    src: "{{ install_dir }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop: "{{ managed_services }}"
+  notify:
+    - Restart service
+  tags:
+    - install
