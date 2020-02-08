@@ -1,7 +1,6 @@
 ---
 go_install_dir: /usr/bin
 system_dependencies:
-  - golang-go
   - gcc
   - git
   - bzr

@@ -23,6 +23,7 @@
     name: lotus-storage-miner
     state: started
     enabled: "yes"
+  changed_when: false
   tags:
     - launch
     - miner

@@ -1,6 +1,6 @@
 title "Lotus configuration integration tests"
 
-describe file('/home/lotus/.lotus/config.toml') do
+describe file('/opt/lotus/.lotus/config.toml') do
   it { should exist }
   its('owner') { should eq 'lotus' }
   its('group') { should eq 'lotus' }
