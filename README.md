@@ -3,9 +3,10 @@
 Ansible Role :cherry_blossom: :link: Lotus
 =========
 [![Galaxy Role](https://img.shields.io/ansible/role/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
-[![Downloads](https://img.shields.io/ansible/role/d/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/ansible-role-lotus?color=yellow)
+[![Downloads](https://img.shields.io/ansible/role/d/45346.svg?color=lightgrey)](https://galaxy.ansible.com/0x0I/lotus)
 [![Build Status](https://travis-ci.org/0x0I/ansible-role-lotus.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-lotus)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
   - [Supported Platforms](#supported-platforms)
@@ -62,19 +63,19 @@ _The following variables can be customized to control various aspects of this in
 - path on target host where the `lotus` binaries should be extracted to.
 
 `archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
-- address of a compressed **tar or zip** archive containing `lotus` binaries. This method technically supports installation of any available version of `lotus`. Links to official versions can be found [here](https://github.com/filecoin-project/lotus/releases). *ONLY* relevant when `install_type` is set to **archive**
+- address of a compressed **tar or zip** archive containing `lotus` binaries. This method technically supports installation of any available version of `lotus`. Links to official versions can be found [here](https://github.com/filecoin-project/lotus/releases).
 
 `archive_checksum: <path-or-url-to-checksum>` (**default**: see `defaults/main.yml`)
-- address of a checksum file for verifying the data integrity of the specified archive. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value. *ONLY* relevant when `install_type` is set to **archive**.
+- address of a checksum file for verifying the data integrity of the specified archive. While recommended and generally considered a best practice, specifying a checksum is *not required* and can be disabled by providing an empty string (`''`) for its value.
 
 `checksum_format: <string>` (**default**: see `sha512`)
-- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes. *ONLY* relevant when `install_type` is set to **archive**
+- hash algorithm used for file verification associated with the specified archive or package checksum. Reference [here](https://en.wikipedia.org/wiki/Cryptographic_hash_function) for more information about *checksums/cryptographic* hashes.
 
 `git_url: <path-or-url-to-git-repo>` (**default**: see `defaults/main.yml`)
-- address of `lotus` git repository. Address can reference the [Github](https://github.com/filecoin-project/lotus) site address or custom source hosted on an alternate git hosting site. *ONLY* relevant when `install_type` is set to **source**
+- address of `lotus` git repository. Address can reference the [Github](https://github.com/filecoin-project/lotus) site address or custom source hosted on an alternate git hosting site.
 
 `version: <string>` (**default**: `v0.1.0`)
-- version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name. *ONLY* relevant when `install_type` is set to **source**.
+- version of the repository to check out. This can be the literal string HEAD, a branch name, a tag name.
 
 `lotus_path: </path/to/runtime/dir>` (**default**: `/opt/lotus/.lotus`)
 - path on target host the `lotus` service should establish as its runtime configuration and data directory.
@@ -86,7 +87,7 @@ _The following variables can be customized to control various aspects of this in
 - automatically install the specified version of Go packages and binaries. Useful when installing from source which requires `go` as a part of its build process
 
 `go_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
-- address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/). *ONLY* relevant when installing on **non-Ubuntu** linux distributions.
+- address of a compressed **tar or zip** archive containing `go` binaries or source for compilation. This method technically supports installation of any available version of `go`. Links to official versions can be found [here](https://golang.org/dl/).
 
 `go_install_dir: </path/to/install/dir>` (**default**: `/usr/local`)
 - path on target host where the `go` binaries should be extracted to.
@@ -141,9 +142,9 @@ _The following variables can be customized to manage the services' **systemd** [
 
 ```yaml
 custom_unit_properties:
-  Environment: "LOTUS_PATH=/var/run/lotus"
+  Environment: "LOTUS_PATH=/var/data/lotus"
 custom_miner_properties:
-  Environment: "LOTUS_STORAGE_PATH=/var/run/lotus-storage-miner"
+  Environment: "LOTUS_STORAGE_PATH=/var/data/lotus-storage-miner"
 ```
 
 Reference the [systemd.service](http://man7.org/linux/man-pages/man5/systemd.service.5.html) *man* page for a configuration overview and reference.
