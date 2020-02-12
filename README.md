@@ -169,14 +169,14 @@ default example:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.lotus
+  - role: 0x0I.lotus
 ```
 
 install `lotus` from specified *git* source version:
 ```
 - hosts: all
   roles:
-  - role: 0xOI.lotus
+  - role: 0x0I.lotus
     vars:
       install_type: source
       git_url: https://github.com/filecoin-project/lotus.git
@@ -187,7 +187,7 @@ expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
 ```
 - hosts: fedora-agents
   roles:
-  - role: 0xOI.lotus
+  - role: 0x0I.lotus
     vars:
       install_type: archive
       config:
@@ -201,7 +201,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
 ```
 - hosts: all
   roles:
-  - role: 0xOI.lotus
+  - role: 0x0I.lotus
     vars:
       install_type: source
       lotus_path: /mnt/lotus
