@@ -1,5 +1,5 @@
 <p><img src="https://code.benco.io/icon-collection/logos/ansible.svg" alt="ansible logo" title="ansible" align="left" height="60" /></p>
-<p><img src="https://cryptologos.cc/logos/filecoin-fil-logo.png" alt="lotus logo" title="lotus" align="right" height="60" /></p>
+<p><img src="https://docs.lotu.sh/static/logo-512.png" alt="lotus logo" title="lotus" align="right" height="90" /></p>
 
 Ansible Role :cherry_blossom: :link: Lotus
 =========
