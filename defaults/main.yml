@@ -12,12 +12,12 @@ go_autoinstall: false
 go_url: https://dl.google.com/go/go1.13.3.linux-amd64.tar.gz
 go_install_dir: /usr/local
 
-archive_url: https://github.com/filecoin-project/lotus/releases/download/v0.2.6/lotus_v0.2.6_linux-amd64.tar.gz
-archive_checksum: https://github.com/filecoin-project/lotus/releases/download/v0.2.6/lotus_v0.2.6_linux-amd64.tar.gz.sha512
+archive_url: https://github.com/filecoin-project/lotus/releases/download/v0.2.10/lotus_v0.2.10_linux-amd64.tar.gz
+archive_checksum: 033cdd7f9f48d6fd5a250a3e304d190182d46c0c9ed1ad61616e6502534eee15f02c55f080fe45c1592f2716588c7a81c693923cca421ec09eaf6f92c2d1bb8b
 checksum_format: sha512
 
 git_url: https://github.com/filecoin-project/lotus.git
-git_version: v0.2.6
+git_version: v0.2.10
 
 _lotus_config_file: config.toml
 config: {}
