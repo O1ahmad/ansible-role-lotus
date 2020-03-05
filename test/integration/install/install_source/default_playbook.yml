@@ -5,5 +5,5 @@
     - role: ansible-role-lotus
       vars:
         install_type: source
-        git_version: v0.1.5
+        git_version: v0.2.10
         go_autoinstall: true
