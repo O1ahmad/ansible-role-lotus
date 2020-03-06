@@ -186,7 +186,7 @@ install `lotus` from specified *git* source version:
 
 expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
 ```
-- hosts: fedora-agents
+- hosts: all
   roles:
   - role: 0x0I.lotus
     vars:
@@ -209,7 +209,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
       lotus_storage_path: /mnt/lotus/miner
       config:
         Metrics:
-          Nickname: "my-miner"
+          Nickname: "my_miner"
       extra_run_args: ['--bootstrap']
       extra_miner_args: ['--nosync']
       custom_miner_properties:
