@@ -7,7 +7,7 @@ services:
   - docker
 
 env:
-  - OS_VERSION=ubuntu-1904
+  - OS_VERSION=ubuntu-1910
   - OS_VERSION=fedora-31
 
 before_script:
