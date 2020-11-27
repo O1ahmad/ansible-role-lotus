@@ -30,8 +30,30 @@
   tags:
     - install
 
-- name: perform designated installation procedure
+- name: Perform designated installation procedure
   include_tasks: "common/install/{{ install_type }}_install.yml"
+  tags:
+    - install
+
+- name: Make & install benchmark tool
+  become: true
+  when: include_benchmarks
+  make:
+    chdir: "{{ install_dir }}"
+    target: lotus-bench
+  environment:
+    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+  changed_when: false
+  tags:
+    - install
+
+- name: Symbolic link the benchmark tool
+  become: true
+  when: include_benchmarks
+  file:
+    src: "{{ install_dir }}/lotus-bench"
+    dest: "/usr/local/bin/lotus-bench"
+    state: link
   tags:
     - install
 

@@ -63,6 +63,9 @@ _The following variables can be customized to control various aspects of this in
 `install_dir: </path/to/installation/dir>` (**default**: `/opt/lotus`)
 - path on target host where the `lotus` binaries should be extracted to.
 
+`include_benchmarks: <true|false>` (**default**: `false`)
+- to build and install `lotus-bench`.  More information [here](https://docs.filecoin.io/mine/lotus/benchmarks/).
+
 `archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `lotus` binaries. This method technically supports installation of any available version of `lotus`. Links to official versions can be found [here](https://github.com/filecoin-project/lotus/releases).
 
@@ -182,6 +185,30 @@ install `lotus` from specified *git* source version:
       install_type: source
       git_url: https://github.com/filecoin-project/lotus.git
       git_version: v0.1.1
+```
+
+install `lotus` for the `calibration` network; include SHA extensions; include rust; include `lotus-bench`:
+```
+- hosts: all
+  roles:
+    - ansible-rustup
+
+- hosts: all
+  environment:
+    # Path for rust/cargo
+    PATH: "/home/{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
+    # SHA Extensions
+    RUSTFLAGS: "-C target-cpu=native -g"
+    FFI_BUILD_FROM_SOURCE: 1
+  roles:
+    - role: 0x0I.lotus
+      vars:
+        install_type: source
+        include_benchmarks: true
+        git_url: https://github.com/filecoin-project/lotus.git
+        git_version: ntwk-calibration
+        go_autoinstall: true
+        go_url: https://dl.google.com/go/go1.15.5.linux-amd64.tar.gz
 ```
 
 expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
