@@ -24,7 +24,7 @@ provisioner:
   hosts: test-kitchen
   name: ansible_playbook
   require_pip: true
-  ansible_version: 2.9.4
+  ansible_version: 2.9.9
   ansible_verbose: true
   ansible_cfg_path: test/ansible.cfg
   requirements_path: test/requirements-test.yml
@@ -41,14 +41,14 @@ platforms:
       <<: *default_driver_config
     provisioner:
       ansible_cfg_path: test/ansible-legacy.cfg
-  - name: fedora-30
+  - name: fedora-32
     driver_config:
       <<: *default_driver_config
       provision_command:
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
         - systemctl enable sshd.service
         - yum -y install python-pip
-  - name: fedora-31
+  - name: fedora-33
     driver_config:
       <<: *default_driver_config
       provision_command:
@@ -61,10 +61,12 @@ platforms:
       provision_command:
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
         - systemctl enable ssh.service
-  - name: ubuntu-19.10
+  - name: ubuntu-20.04
     driver_config:
       <<: *default_driver_config
       provision_command:
+        - apt-get -y update
+        - apt-get install python-pip
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
         - systemctl enable ssh.service
   - name: debian-8
