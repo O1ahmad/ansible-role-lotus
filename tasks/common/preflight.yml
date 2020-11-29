@@ -2,14 +2,14 @@
 - name: Include OS and distribution specific variables
   include_vars: "{{ prerequisite_vars }}"
   with_first_found:
-  - files:
-    - "{{ ansible_distribution|lower }}.yml"
-    - "{{ ansible_os_family|lower }}.yml"
-    skip: true
+    - files:
+        - "{{ ansible_distribution|lower }}.yml"
+        - "{{ ansible_os_family|lower }}.yml"
+      skip: true
   loop_control:
     loop_var: prerequisite_vars
   tags:
-  - always
+    - always
 
 - name: Check for uninstall signal
   when: perform_uninstall
@@ -32,8 +32,8 @@
   unarchive:
     src: "{{ go_url }}"
     dest: "{{ go_install_dir }}"
-    mode: '0775'
-    remote_src: 'yes'
+    mode: "0775"
+    remote_src: "yes"
   tags:
     - preflight
 

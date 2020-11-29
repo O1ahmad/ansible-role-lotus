@@ -1,4 +1,5 @@
 ---
+dist: focal
 language: ruby
 rvm:
   - 2.6.3
@@ -7,14 +8,15 @@ services:
   - docker
 
 env:
-  - OS_VERSION=ubuntu-1910
-  - OS_VERSION=fedora-31
+  - OS_VERSION=ubuntu-1804
+  - OS_VERSION=fedora-32
 
 before_script:
-  - sudo pip install ansible-lint yamllint
+  - sudo apt-get install python3-pip python3-setuptools
+  - sudo pip3 install ansible-lint==4.3.7 yamllint==1.25.0
 
 script:
-  - ansible-lint -x 403 -c ./test/lint/.ansible-lint .
+  - ansible-lint -x 403 -x 208 -x 106 -c ./test/lint/.ansible-lint .
   - yamllint --config-file ./test/lint/yaml-lint.yml .
   - bundle exec kitchen test uninstall-${OS_VERSION}
 
