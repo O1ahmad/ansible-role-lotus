@@ -19,6 +19,8 @@ checksum_format: sha512
 git_url: https://github.com/filecoin-project/lotus.git
 git_version: v0.2.10
 
+include_benchmarks: false
+
 _lotus_config_file: config.toml
 config: {}
 
