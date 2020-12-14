@@ -4,7 +4,7 @@
     name: 0x0i.systemd
   vars:
     unit_config:
-      - name: lotus-storage-miner
+      - name: lotus-miner
         Unit:
           Description: Lotus Storage Miner
           Documentation: https://github.com/filecoin-project/lotus/blob/master/documentation/en/mining.md
@@ -20,7 +20,7 @@
 - name: Ensure start of lotus miner service
   become: true
   service:
-    name: lotus-storage-miner
+    name: lotus-miner
     state: started
     enabled: "yes"
   changed_when: false

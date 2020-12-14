@@ -70,7 +70,7 @@
 - name: Set lotus miner unit [Service] configuration
   set_fact:
     _default_miner_unit:
-      ExecStart: "/usr/local/bin/lotus-storage-miner run {{ extra_miner_args|join(' ') }}"
+      ExecStart: "/usr/local/bin/lotus-miner run {{ extra_miner_args|join(' ') }}"
       User: "{{ lotus_user }}"
       Group: "{{ lotus_user }}"
       StandardOutput: journal
