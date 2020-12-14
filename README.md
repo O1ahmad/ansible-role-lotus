@@ -143,6 +143,14 @@ custom_miner_properties:
   Environment: "LOTUS_STORAGE_PATH=/var/data/lotus-storage-miner"
 ```
 
+To set multiple environment variables, they need to be space-separated:
+```yaml
+custom_unit_properties:
+  Environment: "BELLMAN_CPU_UTILIZATION=0.875 FIL_PROOFS_MAXIMIZE_CACHING=1 FIL_PROOFS_USE_GPU_COLUMN_BUILDER=1"
+custom_miner_properties:
+  Environment: "BELLMAN_CPU_UTILIZATION=0.875 FIL_PROOFS_MAXIMIZE_CACHING=1 FIL_PROOFS_USE_GPU_COLUMN_BUILDER=1"
+```
+
 Reference the [systemd.service](http://man7.org/linux/man-pages/man5/systemd.service.5.html) *man* page for a configuration overview and reference.
 
 #### Uninstall
@@ -223,6 +231,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
       install_type: source
       lotus_path: /mnt/lotus
       lotus_storage_path: /mnt/lotus/miner
+      managed_services: ['lotus', 'lotus-storage-miner']
       config:
         Metrics:
           Nickname: "my_miner"
