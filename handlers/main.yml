@@ -26,7 +26,7 @@
 - name: Stop lotus storage miner systemd service
   become: true
   service:
-    name: lotus-storage-miner
+    name: lotus-miner
     state: stopped
     enabled: false
   listen: Uninstall service
@@ -35,7 +35,7 @@
 - name: Remove Lotus storage miner systemd service file
   become: true
   file:
-    path: "/etc/systemd/system/lotus-storage-miner.service"
+    path: "/etc/systemd/system/lotus-miner.service"
     state: absent
   listen: Uninstall service
 

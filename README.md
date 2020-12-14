@@ -50,7 +50,7 @@ Variables are available and organized according to the following software & mach
 - dedicated service user and group used by `lotus` for privilege separation (see [here](https://www.beyondtrust.com/blog/entry/how-separation-privilege-improves-security) for details)
 
 `install_type: <archive | source>` (**default**: archive)
-- **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the `glibc` *GNU libc libraries* package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-storage-miner` mining software, from the specified archive url.
+- **archive**: currently supported by Ubuntu and Fedora distributions (due to availibity of version >= 2.27 of the `glibc` *GNU libc libraries* package -- see [here](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=glibc&submit=Search+...&system=&arch=) for per-distribution package availability) and compatible with both **tar and zip** formats, installation of Lotus via compressed archives results in the direct download of its component binaries, the `lotus` network client and `lotus-miner` mining software, from the specified archive url.
 
   **note:** archived installation binaries can be obtained from the official [releases](https://github.com/filecoin-project/lotus/releases) site or those generated from development/custom sources.
 
@@ -81,7 +81,7 @@ Variables are available and organized according to the following software & mach
 - path on target host the `lotus` service should establish as its runtime configuration and data directory.
 
 `lotus_storage_path: </path/to/miner/data-dir>` (**default**: `/opt/lotus/.lotusstorage`)
-- path on target host the `lotus-storage-miner` service should establish as its runtime and data storage directory.
+- path on target host the `lotus-miner` service should establish as its runtime and data storage directory.
 
 `go_autoinstall: <true|false>` (**default**: `false`)
 - automatically install the specified version of Go packages and binaries. Useful when installing from source which requires `go` as a part of its build process
@@ -125,8 +125,8 @@ _The following variables can be customized to manage the content of this TOML co
 `extra_run_args: <lotus-cli-options>` (**default**: `[]`)
 - list of `lotus daemon` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus daemon`'s [cli](https://gist.github.com/0x0I/53533099efcee8c87a49301e79358a0a), this variable enables the launch to be customized according to the user's specification.
 
-`extra_miner_args: <lotus-storage-miner-cli-options>` (**default**: `[]`)
-- list of `lotus-storage-miner run` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus-storage-miner run`'s [cli](https://gist.github.com/0x0I/71b7a7c25a7f558d4fd9f0ff39a896d6), this variable enables the launch to be customized according to the user's specification.
+`extra_miner_args: <lotus-miner-cli-options>` (**default**: `[]`)
+- list of `lotus-miner run` commandline arguments to pass to the binary at runtime for customizing launch. Supporting full expression of `lotus-miner run`'s [cli](https://gist.github.com/0x0I/71b7a7c25a7f558d4fd9f0ff39a896d6), this variable enables the launch to be customized according to the user's specification.
 
 `custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the *Lotus* **systemd** service.
@@ -140,7 +140,7 @@ _The following variables can be customized to manage the content of this TOML co
 custom_unit_properties:
   Environment: "LOTUS_PATH=/var/data/lotus"
 custom_miner_properties:
-  Environment: "LOTUS_STORAGE_PATH=/var/data/lotus-storage-miner"
+  Environment: "LOTUS_STORAGE_PATH=/var/data/lotus-miner"
 ```
 
 To set multiple environment variables, they need to be space-separated:
@@ -222,7 +222,7 @@ expose `lotus` API/JSON-RPC server on non-loopback (wildcard/*) address
           ListenAddresses: ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
 ```
 
-launch `lotus` service and `lotus-storage-miner` agents with custom runtime/storage paths and launch options:
+launch `lotus` service and `lotus-miner` agents with custom runtime/storage paths and launch options:
 ```
 - hosts: all
   roles:
@@ -231,7 +231,7 @@ launch `lotus` service and `lotus-storage-miner` agents with custom runtime/stor
       install_type: source
       lotus_path: /mnt/lotus
       lotus_storage_path: /mnt/lotus/miner
-      managed_services: ['lotus', 'lotus-storage-miner']
+      managed_services: ['lotus', 'lotus-miner']
       config:
         Metrics:
           Nickname: "my_miner"
