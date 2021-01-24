@@ -183,11 +183,12 @@ install `lotus` for the `calibration` network; include SHA extensions; include r
 
 - hosts: all
   environment:
-    # Path for rust/cargo
-    PATH: "/home/{{ ansible_env.HOME }}/.cargo/bin:{{ ansible_env.PATH }}"
     # SHA Extensions
     RUSTFLAGS: "-C target-cpu=native -g"
     FFI_BUILD_FROM_SOURCE: 1
+  vars:
+    # Path for rust/cargo
+    cargo_home: "{{ /home/{{ ansible_env.HOME }}/.cargo }}"
   roles:
     - role: 0x0I.lotus
       vars:
