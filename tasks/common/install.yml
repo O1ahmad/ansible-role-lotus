@@ -42,7 +42,7 @@
     chdir: "{{ install_dir }}"
     target: lotus-bench
   environment:
-    PATH: /usr/local/bin:{{ ansible_env.PATH }}
+    PATH: "{{ cargo_home }}/bin:{{ ansible_env.PATH }}"
   changed_when: false
   tags:
     - install
