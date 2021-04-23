@@ -3,6 +3,7 @@
   include_role:
     name: 0x0i.systemd
   vars:
+    perform_uninstall: perform_uninstall
     unit_config:
       - name: lotus
         Unit:
@@ -18,6 +19,7 @@
 
 - name: Ensure start of lotus daemon service
   become: true
+  when: not perform_uninstall|bool
   service:
     name: lotus
     state: started
