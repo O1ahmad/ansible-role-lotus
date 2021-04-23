@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ahmad Wilson
-  role_name: Lotus
+  role_name: lotus
   description: Lotus, an implementation of the Filecoin distributed storage network protocol written in Go
   company: "O1.IO"
   license: license (MIT)
