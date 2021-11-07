@@ -37,3 +37,4 @@ custom_miner_properties: {}
 managed_services: ['lotus']
 
 cargo_home: "{{ /home/{{ ansible_env.HOME }}/.cargo }}"
+testnet: "{{ expansible_env.ENABLE_CALIBNET }}"
