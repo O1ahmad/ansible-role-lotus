@@ -3,10 +3,8 @@
 
 Ansible Role :cherry_blossom: :link: Lotus
 =========
-[![Galaxy Role](https://img.shields.io/ansible/role/45346.svg)](https://galaxy.ansible.com/0x0I/lotus)
+[![Galaxy Role](https://img.shields.io/ansible/role/d/0x0i/lotus)](https://galaxy.ansible.com/0x0I/lotus)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/ansible-role-lotus?color=yellow)
-[![Downloads](https://img.shields.io/ansible/role/d/45346.svg?color=lightgrey)](https://galaxy.ansible.com/0x0I/lotus)
-[![Build Status](https://travis-ci.org/0x0I/ansible-role-lotus.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-lotus)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
